@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textView = (TextView) findViewById(R.id.text_test);
+        TextView textView = (TextView) findViewById(R.id.textView_todayWeather);
 
         textView.setText("adadadad");
     }
