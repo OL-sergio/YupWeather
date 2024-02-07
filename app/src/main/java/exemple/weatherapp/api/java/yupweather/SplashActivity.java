@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import exemple.weatherapp.api.java.yupweather.databinding.ActivitySplashBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Animations;
+import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -26,6 +27,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(view);
 
         components();
+
+        SystemUi systemUi = new SystemUi();
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(systemUi.settingsSplashNavigation());
 
         Animations animations = new Animations();
 
