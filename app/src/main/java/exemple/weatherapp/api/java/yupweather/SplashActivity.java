@@ -39,8 +39,6 @@ public class SplashActivity extends AppCompatActivity {
         multipleCloudAnimationSet.addAnimation(animations.getMovementAnimation());
         imageViewCloud.startAnimation(multipleCloudAnimationSet);
 
-
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -52,8 +50,6 @@ public class SplashActivity extends AppCompatActivity {
         },5000);
 
     }
-
-
 
     private void components() {
         imageViewSun =  binding.imageViewSun;
