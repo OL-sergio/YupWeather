@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
+import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
 
@@ -93,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
             String latitude = String.valueOf(gpsTracker.getLatitude());
             String longitude = String.valueOf(gpsTracker.getLongitude());
             Log.d("Location: ", latitude + " , " + longitude );
+
+        } else {
+
+            CustomAlertDialog.setGpsSettings(this, "GPS settings","GPS is not enabled. Do you want to go to settings menu?");
 
         }
     }
