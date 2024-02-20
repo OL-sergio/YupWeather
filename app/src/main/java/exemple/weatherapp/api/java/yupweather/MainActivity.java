@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
@@ -64,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getLocationData();
+
+        String latitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
+        String longitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
+
+        Log.d("LocationGetShared: ", latitude + " , " + longitude );
     }
 
     @Override
@@ -72,28 +78,47 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.menuItem_gpsLocation) {
             getLocationData();
             // Handle click event for menu item 1
             return true;
+
         } else if (item.getItemId() == R.id.menuItem_searchLocation) {
             // Handle click event for menu item 2
             Log.d("Data: ", "search");
             return true;
+
         } else {
+
             return super.onOptionsItemSelected(item);
+
         }
     }
 
     public void getLocationData(){
         gpsTracker = new GPSTracker(MainActivity.this );
         if (gpsTracker.statusSettingsLocation()){
+
             String latitude = String.valueOf(gpsTracker.getLatitude());
             String longitude = String.valueOf(gpsTracker.getLongitude());
+
             Log.d("Location: ", latitude + " , " + longitude );
+
+            SharedPreferenceLocation.setLocation(
+                    getBaseContext(),
+                    latitude,
+                    longitude
+            );
+
+            String shareLatitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
+            String shareLongitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
+
+            Log.d("LocationSetShared: ", shareLongitude + " , " + shareLatitude );
+
+
 
         } else {
 

@@ -17,7 +17,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
 
-    private ImageView imageViewSun, imageViewCloud;
+    private ImageView imageViewSun;
+    private ImageView imageViewCloud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +46,10 @@ public class SplashActivity extends AppCompatActivity {
         imageViewCloud.startAnimation(multipleCloudAnimationSet);
 
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent( getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        handler.postDelayed(() -> {
+            Intent intent = new Intent( getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         },5000);
 
     }

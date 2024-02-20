@@ -34,7 +34,7 @@ public class GPSTracker extends Service implements LocationListener {
     private double longitude;
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 MT
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 MIN
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 5; // 5 MIN
 
 
     public GPSTracker(Context context) {
@@ -143,7 +143,6 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-       getLocation();
     }
 
     @Override
