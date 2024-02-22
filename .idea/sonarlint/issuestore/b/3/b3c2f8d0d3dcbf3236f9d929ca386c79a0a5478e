@@ -1,0 +1,39 @@
+
+
+java:S1186l"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÇàÜ8÷˜†üÜ1
+m
+java:S1659%"KDeclare "temperatureDay" and all following declarations on a separate line.(š£ĞÏøÿÿÿÿ8ø˜†üÜ1
+w
+java:S1450*"ZRemove the "dataService" field and declare it as a local variable in the relevant methods.(Ï†˜Œ8ø˜†üÜ1
+|
+java:S1450%"ZRemove the "dateTimeDay" field and declare it as a local variable in the relevant methods.(š£ĞÏøÿÿÿÿ8ø˜†üÜ1
+x
+java:S1450+"VRemove the "dayCall" field and declare it as a local variable in the relevant methods.(¡ÚÖåşÿÿÿÿ8ø˜†üÜ1
+|
+java:S1450&"ZRemove the "humidityDay" field and declare it as a local variable in the relevant methods.(ˆéŞğùÿÿÿÿ8ù˜†üÜ1
+|
+java:S1450&"ZRemove the "pressureDay" field and declare it as a local variable in the relevant methods.(ˆéŞğùÿÿÿÿ8ù˜†üÜ1
+
+java:S1450%"]Remove the "temperatureDay" field and declare it as a local variable in the relevant methods.(š£ĞÏøÿÿÿÿ8ù˜†üÜ1
+}
+java:S1450%"[Remove the "todayWeather" field and declare it as a local variable in the relevant methods.(š£ĞÏøÿÿÿÿ8ù˜†üÜ1
+~
+java:S1450&"\Remove the "visibilityDay" field and declare it as a local variable in the relevant methods.(ˆéŞğùÿÿÿÿ8ù˜†üÜ1
+x
+java:S1450&"VRemove the "windDay" field and declare it as a local variable in the relevant methods.(ˆéŞğùÿÿÿÿ8ù˜†üÜ1
+N
+java:S1172l"1Remove this unused method parameter "weatherDay".(ÇàÜ8„™†üÜ1
+Q
+java:S1068%"/Remove this unused "dateTimeDay" private field.(š£ĞÏøÿÿÿÿ8‰™†üÜ1
+T
+java:S1068%"2Remove this unused "temperatureDay" private field.(š£ĞÏøÿÿÿÿ8‰™†üÜ1
+R
+java:S1068%"0Remove this unused "todayWeather" private field.(š£ĞÏøÿÿÿÿ8‰™†üÜ1
+S
+java:S1068&"1Remove this unused "visibilityDay" private field.(ˆéŞğùÿÿÿÿ8‰™†üÜ1
+Q
+java:S1068&"/Remove this unused "pressureDay" private field.(ˆéŞğùÿÿÿÿ8‰™†üÜ1
+M
+java:S1068&"+Remove this unused "windDay" private field.(ˆéŞğùÿÿÿÿ8‰™†üÜ1
+Q
+java:S1068&"/Remove this unused "humidityDay" private field.(ˆéŞğùÿÿÿÿ8Š™†üÜ1

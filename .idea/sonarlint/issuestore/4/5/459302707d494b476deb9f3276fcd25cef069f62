@@ -1,0 +1,25 @@
+
+Q
+java:S1066T"/Merge this if statement with the enclosing one.(êÿ×¤ùÿÿÿÿ8øÍŞºÜ1
+c
+java:S2184%"FCast one of the operands of this multiplication operation to a "long".(¢ğ£«8Ê§ãºÜ1
+h
+java:S2259\"MA "NullPointerException" could be thrown; "locationManager" is nullable here.(ı¡­Ôûÿÿÿÿ
+¤
+java:S1186‘"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(òğí¯ûÿÿÿÿ8ğùİºÜ1
+Ÿ
+java:S1186•"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÀÄŞ’8ğùİºÜ1
+¤
+java:S1186™"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ŸüÊúÿÿÿÿ8ğùİºÜ1
+˜
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(„Ãõ
+g
+java:S3776-"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(ôñ¡
+t
+java:S3252<"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(Îï•¾8Ôå×ºÜ1
+y
+java:S3252>"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(Ëİ¬şÿÿÿÿ8Æ§ØºÜ1
+t
+java:S3252U"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(Îï•¾8©°ÙºÜ1
+y
+java:S3252W"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(Ëİ¬şÿÿÿÿ8¤×ÙºÜ1
