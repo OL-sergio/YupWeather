@@ -62,7 +62,7 @@ public class GPSTracker extends Service implements LocationListener {
                            && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                            != PackageManager.PERMISSION_GRANTED) {
                        ActivityCompat.requestPermissions((Activity) context, new String[]{
-                               Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, Constants.requestCode);
+                               Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION }, Constants.REQUEST_CODE);
                     }
 
                     locationManager.requestLocationUpdates(
@@ -87,7 +87,7 @@ public class GPSTracker extends Service implements LocationListener {
                                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                                 != PackageManager.PERMISSION_GRANTED){
                             ActivityCompat.requestPermissions((Activity) context, new String[]{
-                                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, Constants.requestCode );
+                                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, Constants.REQUEST_CODE );
                         }
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,

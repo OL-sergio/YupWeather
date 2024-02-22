@@ -16,12 +16,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import exemple.weatherapp.api.java.yupweather.database.api.APIClient;
+import exemple.weatherapp.api.java.yupweather.database.api.DataService;
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
+import exemple.weatherapp.api.java.yupweather.model.WeatherDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
             visibilityDay, pressureDay, windDay, humidityDay;
 
     private GPSTracker gpsTracker;
+
+    private DataService dataService;
+    private Call<WeatherDay> dayCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +60,53 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textView_todayWeather);
 
-        textView.setText("adadadad");
+        textView.setText("test");
 
         try {
             if ( ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION )
                     != PackageManager.PERMISSION_GRANTED ){
                 ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION}, Constants.requestCode );
+                        Manifest.permission.ACCESS_FINE_LOCATION}, Constants.REQUEST_CODE );
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        getLocationData();
-
         String latitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
         String longitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
 
         Log.d("LocationGetShared: ", latitude + " , " + longitude );
+
+        getLocationData();
+
+        dataService = APIClient.getInstance().create(DataService.class);
+
+        dayCall = dataService.getDayWeather(latitude, longitude, Constants.API_KEY);
+
+        dayCall.enqueue(new Callback<WeatherDay>() {
+            @Override
+            public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
+                if (response.isSuccessful()) {
+                    WeatherDay weatherDay = response.body();
+                    getWeatherDayData(weatherDay);
+                    Log.d("Success: ", response.message() + " " + response.code());
+
+                } else {
+                    Log.d("Error: ", response.message() + " " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeatherDay> call, Throwable t) {
+                Log.d("Network error: ", t.getMessage());
+            }
+        });
+
+    }
+
+    private void getWeatherDayData(WeatherDay weatherDay) {
+
     }
 
     @Override
@@ -78,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == R.id.menuItem_gpsLocation) {
             getLocationData();
             // Handle click event for menu item 1
@@ -116,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             String shareLatitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
             String shareLongitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
 
-            Log.d("LocationSetShared: ", shareLongitude + " , " + shareLatitude );
+            Log.d("LocationSetShared: ", shareLatitude + " , " + shareLongitude );
 
 
 

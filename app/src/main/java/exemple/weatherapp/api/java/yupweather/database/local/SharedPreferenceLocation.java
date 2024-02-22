@@ -6,33 +6,30 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
-public class SharedPreferenceLocation extends Activity {
+import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 
-    private static final String location = "location_gps";
-    private static final String _latitude = "latitude";
-    private static final String _longitude = "longitude";
+public class SharedPreferenceLocation extends Activity {
 
     private static SharedPreferences sharedPreferences;
 
-
     public static void setLocation(@NonNull Context context, String latitude , String longitude) {
-        sharedPreferences = context.getSharedPreferences(location, MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(Constants.LOCATION, MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.clear();
-        editor.putString(_latitude, longitude);
-        editor.putString(_longitude, latitude);
+        editor.putString(Constants.LATITUDE, latitude);
+        editor.putString(Constants.LONGITUDE, longitude);
         editor.apply();
     }
 
     public static String getLongitudeLocation(@NonNull Context context) {
-        sharedPreferences = context.getSharedPreferences(location, MODE_PRIVATE);
-        return sharedPreferences.getString( _longitude,"" )  ;
+        sharedPreferences = context.getSharedPreferences(Constants.LOCATION, MODE_PRIVATE);
+        return sharedPreferences.getString( Constants.LONGITUDE,"" )  ;
     }
 
     public static String getLatitudeLocation(@NonNull Context context) {
-        sharedPreferences = context.getSharedPreferences(location, MODE_PRIVATE);
-        return sharedPreferences.getString(_latitude, "")  ;
+        sharedPreferences = context.getSharedPreferences(Constants.LOCATION, MODE_PRIVATE);
+        return sharedPreferences.getString(Constants.LATITUDE, "")  ;
     }
 }
