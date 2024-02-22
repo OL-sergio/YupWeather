@@ -34,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private TextView dateTimeDay, temperatureDay, todayWeather,
-            visibilityDay, pressureDay, windDay, humidityDay;
+    private TextView dateTimeDay;
+    private TextView temperatureDay;
+    private TextView todayWeather;
+    private TextView visibilityDay;
+    private TextView pressureDay;
+    private TextView windDay;
+    private TextView humidityDay;
 
     private GPSTracker gpsTracker;
 
@@ -57,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbarMain);
 
         components();
-
-        TextView textView = findViewById(R.id.textView_todayWeather);
-
-        textView.setText("test");
 
         try {
             if ( ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION )
@@ -106,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeatherDayData(WeatherDay weatherDay) {
+
+        temperatureDay.setText(weatherDay.getTemp() + " - " + weatherDay.getDescription());
+        todayWeather.setText(weatherDay.getMain());
+        visibilityDay.setText(weatherDay.getVisibility());
+        pressureDay.setText(weatherDay.getPressure());
+        windDay.setText(weatherDay.getSpeed());
+        humidityDay.setText(weatherDay.getHumidity());
+
 
     }
 
