@@ -1,9 +1,13 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
+import exemple.weatherapp.api.java.yupweather.BuildConfig;
+
+
 public final class Constants {
 
     public static final int REQUEST_CODE = 101 ;
-    public static final String API_KEY = "b67f25d3dbc12d7d9ed5c12b09e1bafd";
+    //public static final String API_KEY = "b67f25d3dbc12d7d9ed5c12b09e1bafd";
+    public static final String API_KEY = BuildConfig.API_KEY;
     public static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
     //DataService interface
