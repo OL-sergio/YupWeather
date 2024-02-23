@@ -110,14 +110,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void getWeatherDayData(WeatherDay weatherDay) {
 
+        TextView toolbarCityName = binding.toolbarMain.textViewSelectedCity;
+        toolbarCityName.setText(weatherDay.getName());
+
+        TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
+        toolbarWeatherLastUpdate.setText("17:05 - 02/06/2024");
+
+        dateTimeDay.setText(weatherDay.getName());
         temperatureDay.setText(weatherDay.getTemp() + " - " + weatherDay.getDescription());
         todayWeather.setText(weatherDay.getMain());
         visibilityDay.setText(weatherDay.getVisibility());
         pressureDay.setText(weatherDay.getPressure());
         windDay.setText(weatherDay.getSpeed());
         humidityDay.setText(weatherDay.getHumidity());
-
-
     }
 
     @Override
@@ -150,23 +155,25 @@ public class MainActivity extends AppCompatActivity {
         gpsTracker = new GPSTracker(MainActivity.this );
         if (gpsTracker.statusSettingsLocation()){
 
-            String latitude = String.valueOf(gpsTracker.getLatitude());
-            String longitude = String.valueOf(gpsTracker.getLongitude());
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
 
-            Log.d("Location: ", latitude + " , " + longitude );
+            String textLatitude = String.valueOf((int) Math.round(latitude));
+            String textLongitude = String.valueOf((int) Math.round(longitude));
+
+
+            Log.d("Location: ", textLatitude + " , " + textLongitude );
 
             SharedPreferenceLocation.setLocation(
                     getBaseContext(),
-                    latitude,
-                    longitude
+                    textLatitude,
+                    textLongitude
             );
 
             String shareLatitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
             String shareLongitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
 
             Log.d("LocationSetShared: ", shareLatitude + " , " + shareLongitude );
-
-
 
         } else {
 

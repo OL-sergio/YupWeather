@@ -88,6 +88,10 @@ public class WeatherDay {
         this.name = name;
     }
 
+    public WeatherDay() {
+
+    }
+
     public int getId() {
         return id;
     }
