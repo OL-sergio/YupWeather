@@ -1,7 +1,12 @@
 package exemple.weatherapp.api.java.yupweather;
 
+import static java.lang.Integer.parseInt;
+
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.*;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +29,7 @@ import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLoc
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.model.WeatherDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
+import exemple.weatherapp.api.java.yupweather.utilities.Converts;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
@@ -88,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         dayCall = dataService.getDayWeather(latitude, longitude, Constants.API_KEY);
 
         dayCall.enqueue(new Callback<WeatherDay>() {
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
                 if (response.isSuccessful()) {
@@ -108,21 +117,66 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getWeatherDayData(WeatherDay weatherDay) {
 
         TextView toolbarCityName = binding.toolbarMain.textViewSelectedCity;
         toolbarCityName.setText(weatherDay.getName());
 
-        TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
-        toolbarWeatherLastUpdate.setText("17:05 - 02/06/2024");
+        String convertedHour = (String) convertHour("1661870592");
 
-        dateTimeDay.setText(weatherDay.getName());
-        temperatureDay.setText(weatherDay.getTemp() + " - " + weatherDay.getDescription());
-        todayWeather.setText(weatherDay.getMain());
-        visibilityDay.setText(weatherDay.getVisibility());
+        TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
+        toolbarWeatherLastUpdate.setText(new StringBuilder()
+                .append("Last Update: ")
+                .append(convertedHour));
+
+        String convertedDate = convertDate("1661870592");
+
+        dateTimeDay.setText(convertedDate);
+
+
+
+        int temp = (int) convertKevinToCelsius(weatherDay.getTemp()
+       );
+
+        temperatureDay.setText(new StringBuilder().append(temp).append(" C"));
+
+        todayWeather.setText(new StringBuilder()
+                .append(weatherDay.getMain())
+                .append(" - ")
+                .append(weatherDay.getDescription()));
+
+        int visibility = (int) convertMeterToKilometer(
+                parseInt(weatherDay.getVisibility()
+                )
+        );
+
+        visibilityDay.setText(
+                new StringBuilder()
+                        .append(visibility).append(" km")
+        );
+
         pressureDay.setText(weatherDay.getPressure());
-        windDay.setText(weatherDay.getSpeed());
-        humidityDay.setText(weatherDay.getHumidity());
+
+         int winSpeedKmH = (int) convertWindSpeedMeterToKilometer(
+                 weatherDay.getSpeed()
+         );
+
+
+        windDay.setText(
+                new StringBuilder()
+                      .append(winSpeedKmH).append(" km/h")
+        );
+       Log.d("Wind: ", weatherDay.getSpeed() + " km/h");
+
+        humidityDay.setText(new StringBuilder()
+              .append(weatherDay.getHumidity()).append("%")
+        );
+
+        humidityDay.setText(new StringBuilder()
+                .append(weatherDay.getHumidity()).append("%")
+        );
+
     }
 
     @Override
@@ -158,9 +212,10 @@ public class MainActivity extends AppCompatActivity {
             double latitude = gpsTracker.getLatitude();
             double longitude = gpsTracker.getLongitude();
 
-            String textLatitude = String.valueOf((int) Math.round(latitude));
-            String textLongitude = String.valueOf((int) Math.round(longitude));
-
+            String textLatitude = convertDoubleToInteger(latitude);
+            String textLongitude = convertDoubleToInteger(longitude);
+            //String textLatitude = String.valueOf((int) Math.round(latitude));
+            //String textLongitude = String.valueOf((int) Math.round(longitude));
 
             Log.d("Location: ", textLatitude + " , " + textLongitude );
 
@@ -169,11 +224,6 @@ public class MainActivity extends AppCompatActivity {
                     textLatitude,
                     textLongitude
             );
-
-            String shareLatitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
-            String shareLongitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
-
-            Log.d("LocationSetShared: ", shareLatitude + " , " + shareLongitude );
 
         } else {
 

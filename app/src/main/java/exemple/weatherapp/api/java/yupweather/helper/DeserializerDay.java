@@ -30,8 +30,8 @@ public class DeserializerDay implements JsonDeserializer<WeatherDay> {
         String icon = json.getAsJsonObject().get(Constants.WEATHER).getAsJsonArray().get(0)
                 .getAsJsonObject().get(Constants.ICON).getAsString();
 
-        String temp = json.getAsJsonObject().get(Constants.MAIN)
-                .getAsJsonObject().get(Constants.TEMP).getAsString();
+        float temp = json.getAsJsonObject().get(Constants.MAIN)
+                .getAsJsonObject().get(Constants.TEMP).getAsFloat();
 
         String humidity = json.getAsJsonObject().get(Constants.MAIN)
                 .getAsJsonObject().get(Constants.HUMIDITY).getAsString();
@@ -42,8 +42,8 @@ public class DeserializerDay implements JsonDeserializer<WeatherDay> {
         String visibility = json.getAsJsonObject()
                 .get(Constants.VISIBILITY).getAsString();
 
-        String windSpeed = json.getAsJsonObject().get(Constants.WIND)
-                .getAsJsonObject().get(Constants.SPEED).getAsString();
+        float windSpeed = json.getAsJsonObject().get(Constants.WIND)
+                .getAsJsonObject().get(Constants.SPEED).getAsFloat();
 
         String country = json.getAsJsonObject().get(Constants.SYS)
                 .getAsJsonObject().get(Constants.COUNTRY).getAsString();

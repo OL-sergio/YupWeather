@@ -16,7 +16,6 @@ public class SharedPreferenceLocation extends Activity {
         sharedPreferences = context.getSharedPreferences(Constants.LOCATION, MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.clear();
         editor.putString(Constants.LATITUDE, latitude);
         editor.putString(Constants.LONGITUDE, longitude);

@@ -52,11 +52,11 @@ public class WeatherDay {
     private String main;
     private String description;
     private String icon;
-    private String temp;
+    private float temp;
     private String pressure;
     private String visibility;
     private String humidity;
-    private String speed;
+    private float speed;
     private String country;
     private String name;
 
@@ -65,11 +65,11 @@ public class WeatherDay {
             String main,
             String description,
             String icon,
-            String temp,
+            float temp,
             String pressure,
             String visibility,
             String humidity,
-            String speed,
+            float speed,
             String country,
             String name
     )
@@ -86,10 +86,6 @@ public class WeatherDay {
         this.speed = speed;
         this.country = country;
         this.name = name;
-    }
-
-    public WeatherDay() {
-
     }
 
     public int getId() {
@@ -124,11 +120,11 @@ public class WeatherDay {
         this.icon = icon;
     }
 
-    public String getTemp() {
+    public float getTemp() {
         return temp;
     }
 
-    public void setTemp(String temp) {
+    public void setTemp(float temp) {
         this.temp = temp;
     }
 
@@ -156,11 +152,11 @@ public class WeatherDay {
         this.humidity = humidity;
     }
 
-    public String getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public void setSpeed(String speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 
