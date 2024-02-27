@@ -20,16 +20,19 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.BundleCompat;
 import androidx.core.content.ContextCompat;
 
-import exemple.weatherapp.api.java.yupweather.database.api.APIClient;
-import exemple.weatherapp.api.java.yupweather.database.api.DataService;
+import com.google.android.gms.common.stats.StatsUtils;
+
+import exemple.weatherapp.api.java.yupweather.database.api.APIClientMain;
+import exemple.weatherapp.api.java.yupweather.database.api.APIClientConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.DataServiceConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.DataServiceMain;
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
-import exemple.weatherapp.api.java.yupweather.model.WeatherDay;
+import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
+import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
-import exemple.weatherapp.api.java.yupweather.utilities.Converts;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
@@ -52,9 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
     private GPSTracker gpsTracker;
 
-    private DataService dataService;
-    private Call<WeatherDay> dayCall;
+    private DataServiceConditions dataServiceConditions;
+    private DataServiceMain dataServiceMain;
 
+    private Call<WeatherConditionsDay> dayCallConditions;
+    private Call<WeatherMainDay> dayCallMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +95,27 @@ public class MainActivity extends AppCompatActivity {
 
         getLocationData();
 
-        dataService = APIClient.getInstance().create(DataService.class);
+        dataServiceConditions = APIClientConditions.getConditionsInstance().create(DataServiceConditions.class);
+        dataServiceMain = APIClientMain.getMainInstance().create(DataServiceMain.class);
 
-        dayCall = dataService.getDayWeather(latitude, longitude, Constants.API_KEY);
+        dayCallConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
+        dayCallMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
 
-        dayCall.enqueue(new Callback<WeatherDay>() {
+        getMainWeather();
+        getConditionWeather();
+
+    }
+
+    private void getMainWeather() {
+        dayCallMain.enqueue(new Callback<WeatherMainDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onResponse(Call<WeatherDay> call, Response<WeatherDay> response) {
+            public void onResponse(Call<WeatherMainDay> call, Response<WeatherMainDay> response) {
                 if (response.isSuccessful()) {
-                    WeatherDay weatherDay = response.body();
-                    getWeatherDayData(weatherDay);
-                    Log.d("Success: ", response.message() + " " + response.code());
+                    WeatherMainDay weatherMainDay = response.body();
+                    getMainWeatherData(weatherMainDay);
+                    Log.d("Success M: ", response.message() + " " + response.code());
 
                 } else {
                     Log.d("Error: ", response.message() + " " + response.code());
@@ -110,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<WeatherDay> call, Throwable t) {
+            public void onFailure(Call<WeatherMainDay> call, Throwable t) {
                 Log.d("Network error: ", t.getMessage());
             }
         });
@@ -118,64 +131,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getWeatherDayData(WeatherDay weatherDay) {
+    private void getMainWeatherData(WeatherMainDay weatherMainDay) {
 
         TextView toolbarCityName = binding.toolbarMain.textViewSelectedCity;
-        toolbarCityName.setText(weatherDay.getName());
+        toolbarCityName.setText(new StringBuilder().append(
+                weatherMainDay.getName()).append(", ")
+                .append(weatherMainDay.getCountry())
+        );
 
-        String convertedHour = (String) convertHour("1661870592");
+        String convertedHour =  convertHour(weatherMainDay.getDt());
 
         TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
         toolbarWeatherLastUpdate.setText(new StringBuilder()
                 .append("Last Update: ")
                 .append(convertedHour));
 
-        String convertedDate = convertDate("1661870592");
-
+        String convertedDate = convertDate(weatherMainDay.getDt());
         dateTimeDay.setText(convertedDate);
 
-
-
-        int temp = (int) convertKevinToCelsius(weatherDay.getTemp()
-       );
-
-        temperatureDay.setText(new StringBuilder().append(temp).append(" C"));
-
         todayWeather.setText(new StringBuilder()
-                .append(weatherDay.getMain())
+                .append(weatherMainDay.getMain())
                 .append(" - ")
-                .append(weatherDay.getDescription()));
-
-        int visibility = (int) convertMeterToKilometer(
-                parseInt(weatherDay.getVisibility()
-                )
-        );
-
-        visibilityDay.setText(
-                new StringBuilder()
-                        .append(visibility).append(" km")
-        );
-
-        pressureDay.setText(weatherDay.getPressure());
-
-         int winSpeedKmH = (int) convertWindSpeedMeterToKilometer(
-                 weatherDay.getSpeed()
-         );
+                .append(weatherMainDay.getDescription()));
+    }
 
 
-        windDay.setText(
-                new StringBuilder()
-                      .append(winSpeedKmH).append(" km/h")
-        );
-       Log.d("Wind: ", weatherDay.getSpeed() + " km/h");
+    private void getConditionWeather() {
+        dayCallConditions.enqueue(new Callback<WeatherConditionsDay>() {
 
-        humidityDay.setText(new StringBuilder()
-              .append(weatherDay.getHumidity()).append("%")
-        );
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(Call<WeatherConditionsDay> call, Response<WeatherConditionsDay> response) {
+                if (response.isSuccessful()) {
+                    WeatherConditionsDay weatherConditionsDay = response.body();
+                    getWeatherConditionDayData(weatherConditionsDay);
+                    Log.d("Success C: ", response.message() + " " + response.code());
 
-        humidityDay.setText(new StringBuilder()
-                .append(weatherDay.getHumidity()).append("%")
-        );
+                } else {
+                    Log.d("Error: ", response.message() + " " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeatherConditionsDay> call, Throwable t) {
+                Log.d("Network error: ", t.getMessage());
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void getWeatherConditionDayData(WeatherConditionsDay weatherConditionsDay) {
+
+        int temp = (int) convertKevinToCelsius(weatherConditionsDay.getTemp());
+        temperatureDay.setText(new StringBuilder().append(temp).append(getString(R.string.special_character)).append(getString(R.string.celcius)));
+
+        int visibility = (int) convertMeterToKilometer(parseInt(weatherConditionsDay.getVisibility()));
+
+        visibilityDay.setText(new StringBuilder().append(visibility).append(" km"));
+
+        pressureDay.setText(weatherConditionsDay.getPressure());
+
+         int winSpeedKmH = (int) convertWindSpeedMeterToKilometer(weatherConditionsDay.getSpeed());
+
+         windDay.setText(new StringBuilder().append(winSpeedKmH).append(" km/h"));
+
+         humidityDay.setText(new StringBuilder().append(weatherConditionsDay.getHumidity()).append("%"));
+         humidityDay.setText(new StringBuilder().append(weatherConditionsDay.getHumidity()).append("%"));
 
     }
 
@@ -190,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuItem_gpsLocation) {
             getLocationData();
+
             // Handle click event for menu item 1
             return true;
 
@@ -241,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
         windDay = binding.textViewDataWind;
         humidityDay = binding.textViewDataHumidity;
     }
+
 
     @Override
     protected void onDestroy() {

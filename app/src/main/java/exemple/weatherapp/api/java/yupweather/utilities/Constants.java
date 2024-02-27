@@ -17,21 +17,23 @@ public final class Constants {
     public static final String LON = "lon";
     public static final String APPID = "appid";
 
-    //DeserializerDay
-    public static final String DAY = "day";
+    //DeserializerConditions
     public static final String TEMP = "temp";
     public static final String HUMIDITY = "humidity";
     public static final String PRESSURE = "pressure";
     public static final String VISIBILITY = "visibility";
     public static final String SPEED = "speed";
-    public static final String COUNTRY = "country";
-    public static final String NAME = "name";
-    public static final String MAIN = "main";
-    public static final String DESCRIPTION = "description";
-    public static final String ICON = "icon";
     public static final String ID = "id";
     public static final String SYS = "sys";
     public static final String WIND = "wind";
+
+    //DeserializerMain
+    public static final String NAME = "name";
+    public static final String MAIN = "main";
+    public static final String COUNTRY = "country";
+    public static final String DESCRIPTION = "description";
+    public static final String ICON = "icon";
+    public static final String DATE_TIME = "dt";
 
 
     //SharedPreferenceLocation

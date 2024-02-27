@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">YupWeather</string>
+    <string name="special_character"> º</string>
+    <string name="celcius">C</string>
 </resources>

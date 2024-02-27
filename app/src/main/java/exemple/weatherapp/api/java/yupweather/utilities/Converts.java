@@ -27,22 +27,18 @@ public final class Converts {
         return Integer.toString((int) Math.round(location));
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String convertDate(String date) {
 
      return DateTimeFormatter.ofPattern("EEEE, MMMM, dd, yyyy" )
                         .withZone(ZoneId.of("UTC"))
                 .toFormat().format(Instant.ofEpochMilli(Long.parseLong(date)));
-
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String convertHour(String date) {
-
-        return DateTimeFormatter.ofPattern("h:mm:ss a" )
+    public static String convertHour(String hours) {
+        return DateTimeFormatter.ofPattern("HH:mm:ss" )
                 .withZone(ZoneId.of("UTC"))
-                .toFormat().format(Instant.ofEpochMilli(Long.parseLong(date)));
-
+                .toFormat().format(Instant.ofEpochMilli(Long.parseLong(hours)));
     }
-
 }
