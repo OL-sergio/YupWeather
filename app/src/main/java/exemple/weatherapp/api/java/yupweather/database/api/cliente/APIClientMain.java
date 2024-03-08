@@ -1,11 +1,16 @@
-package exemple.weatherapp.api.java.yupweather.database.api;
+package exemple.weatherapp.api.java.yupweather.database.api.cliente;
 
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+
 import exemple.weatherapp.api.java.yupweather.helper.DeserializerMain;
+import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,6 +34,14 @@ public static Retrofit getMainInstance(){
         return retrofit;
     }
 
+    public static ErrorResponse parseError(Response response) throws IOException {
+
+        Gson gson = new Gson();
+        if (response.errorBody() == null) throw new AssertionError();
+
+        return gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+    }
 }
 
 

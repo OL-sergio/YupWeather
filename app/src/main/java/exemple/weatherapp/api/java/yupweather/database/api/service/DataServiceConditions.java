@@ -1,4 +1,4 @@
-package exemple.weatherapp.api.java.yupweather.database.api;
+package exemple.weatherapp.api.java.yupweather.database.api.service;
 
 
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;

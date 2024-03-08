@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -22,14 +23,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.stats.StatsUtils;
+import com.google.gson.Gson;
 
-import exemple.weatherapp.api.java.yupweather.database.api.APIClientMain;
-import exemple.weatherapp.api.java.yupweather.database.api.APIClientConditions;
-import exemple.weatherapp.api.java.yupweather.database.api.DataServiceConditions;
-import exemple.weatherapp.api.java.yupweather.database.api.DataServiceMain;
+import java.io.IOException;
+
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMain;
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
+import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Call<WeatherConditionsDay> dayCallConditions;
     private Call<WeatherMainDay> dayCallMain;
+    private ErrorResponse errorResponse;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,13 +107,11 @@ public class MainActivity extends AppCompatActivity {
         dayCallConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
         dayCallMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
 
-        getMainWeather();
-        getConditionWeather();
 
     }
 
     private void getMainWeather() {
-        dayCallMain.enqueue(new Callback<WeatherMainDay>() {
+        dayCallMain.clone().enqueue(new Callback<WeatherMainDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -115,10 +119,21 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     WeatherMainDay weatherMainDay = response.body();
                     getMainWeatherData(weatherMainDay);
+                    Log.d("Success M: ", "Response: " + new Gson().toJson(weatherMainDay) );
                     Log.d("Success M: ", response.message() + " " + response.code());
 
                 } else {
-                    Log.d("Error: ", response.message() + " " + response.code());
+                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
+                    try {
+                        errorResponse = APIClientMain.parseError(response);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (errorResponse != null) {
+                        // Handle error response
+                        Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+                        Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -127,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Network error: ", t.getMessage());
             }
         });
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -157,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getConditionWeather() {
-        dayCallConditions.enqueue(new Callback<WeatherConditionsDay>() {
+        dayCallConditions.clone().enqueue(new Callback<WeatherConditionsDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -168,7 +182,18 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Success C: ", response.message() + " " + response.code());
 
                 } else {
-                    Log.d("Error: ", response.message() + " " + response.code());
+                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
+
+                    try {
+                        errorResponse = APIClientConditions.parseError(response);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (errorResponse != null) {
+                        // Handle error response
+                        Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+                        Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -264,6 +289,19 @@ public class MainActivity extends AppCompatActivity {
         humidityDay = binding.textViewDataHumidity;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getMainWeather();
+        getConditionWeather();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getMainWeather();
+        getConditionWeather();
+    }
 
     @Override
     protected void onDestroy() {

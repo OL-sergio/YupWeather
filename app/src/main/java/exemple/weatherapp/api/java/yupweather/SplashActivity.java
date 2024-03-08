@@ -2,6 +2,7 @@ package exemple.weatherapp.api.java.yupweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import exemple.weatherapp.api.java.yupweather.databinding.ActivitySplashBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Animations;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
