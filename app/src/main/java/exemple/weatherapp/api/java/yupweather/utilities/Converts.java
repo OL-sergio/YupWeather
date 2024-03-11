@@ -1,6 +1,7 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -41,4 +42,20 @@ public final class Converts {
                 .withZone(ZoneId.of("UTC"))
                 .toFormat().format(Instant.ofEpochMilli(Long.parseLong(hours)));
     }
+
+    public static String convertErrorMessageSize(String message) {
+
+        String[] paragraphs = message.split("Please see");
+
+        if (paragraphs.length > 1) {
+            paragraphs[1] = ""; // delete the first paragraph
+        }
+
+        String newMessage = String.join("", paragraphs);
+
+        Log.d("New Message", "The new message is: " + newMessage);
+        return newMessage;
+
+    }
+
 }

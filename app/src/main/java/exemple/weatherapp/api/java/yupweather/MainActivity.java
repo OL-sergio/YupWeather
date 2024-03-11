@@ -5,14 +5,17 @@ import static java.lang.Integer.parseInt;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.*;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +40,7 @@ import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
-import exemple.weatherapp.api.java.yupweather.utilities.CustomAlertDialog;
+import exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
 import retrofit2.Call;
@@ -132,7 +135,15 @@ public class MainActivity extends AppCompatActivity {
                     if (errorResponse != null) {
                         // Handle error response
                         Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
-                        Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        String errorText = errorResponse.getMessage();
+                        convertErrorMessageSize(errorText);
+                        String errorTextConvert = convertErrorMessageSize(errorText);
+
+                        //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
+
+                        CustomAlerts.setToastAlert(MainActivity.this, errorTextConvert);
+
                     }
                 }
             }
@@ -171,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getConditionWeather() {
-        dayCallConditions.clone().enqueue(new Callback<WeatherConditionsDay>() {
+        dayCallConditions.clone();
+        dayCallConditions.enqueue(new Callback<WeatherConditionsDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -192,7 +204,30 @@ public class MainActivity extends AppCompatActivity {
                     if (errorResponse != null) {
                         // Handle error response
                         Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
-                        Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        String errorText = errorResponse.getMessage();
+                        convertErrorMessageSize(errorText);
+                        String errorTextConvert = convertErrorMessageSize(errorText);
+
+                        //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
+
+                        /*
+                        View layout = getLayoutInflater().inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.layout_customToast));
+                        TextView text = layout.findViewById(R.id.textView_customToast);
+                        text.setText(errorTextConvert);
+                        */
+
+                        /*
+                        *
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, -125);
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+                        */
+
+                        CustomAlerts.setToastAlert(MainActivity.this, errorTextConvert);
+
                     }
                 }
             }
@@ -236,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuItem_gpsLocation) {
             getLocationData();
+            getConditionWeather();
+            getMainWeather();
 
             // Handle click event for menu item 1
             return true;
@@ -274,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            CustomAlertDialog.setGpsSettings(this, "GPS settings","GPS is not enabled. Do you want to go to settings menu?");
+            CustomAlerts.setGpsSettings(this, "GPS settings","GPS is not enabled. Do you want to go to settings menu?");
 
         }
     }
