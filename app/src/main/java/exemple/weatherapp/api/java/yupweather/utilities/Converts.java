@@ -1,13 +1,18 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 
 public final class Converts {
@@ -28,20 +33,19 @@ public final class Converts {
         return Integer.toString((int) Math.round(location));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String convertDate(String date) {
 
-     return DateTimeFormatter.ofPattern("EEEE, MMMM, dd, yyyy" )
-                        .withZone(ZoneId.of("UTC"))
-                .toFormat().format(Instant.ofEpochMilli(Long.parseLong(date)));
+    @SuppressLint("SimpleDateFormat")
+    public static String simpleConvertDate(String date) {
+     return new SimpleDateFormat( "EEEE, MMMM, dd, yyyy").format(new Date());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String convertHour(String hours) {
-        return DateTimeFormatter.ofPattern("HH:mm:ss" )
-                .withZone(ZoneId.of("UTC"))
-                .toFormat().format(Instant.ofEpochMilli(Long.parseLong(hours)));
+
+    @SuppressLint("SimpleDateFormat")
+    public static String simpleConvertHour(String hours) {
+        return new SimpleDateFormat("HH:mm:ss").format(new Date());
     }
+
+
 
     public static String convertErrorMessageSize(String message) {
 

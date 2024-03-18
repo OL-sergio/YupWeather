@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/background_home"
+    android:background="@color/color_100"
     android:orientation="vertical"
     android:id="@+id/scrollView"
     tools:context=".MainActivity">
@@ -28,6 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RelativeLayout
+                android:id="@+id/relativeLayout3"
                 android:layout_width="260dp"
                 android:layout_height="300dp"
                 android:layout_marginEnd="32dp"
@@ -38,7 +39,10 @@
                 app:layout_constraintTop_toTopOf="@+id/textView_dateForecast"
                 tools:ignore="UnknownId" />
 
+
+
             <RelativeLayout
+                android:id="@+id/relativeLayout2"
                 android:layout_width="260dp"
                 android:layout_height="300dp"
                 android:layout_marginStart="32dp"
@@ -48,16 +52,8 @@
                 app:layout_constraintStart_toEndOf="@+id/relativeLayout"
                 app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
 
-            <RelativeLayout
-                android:layout_width="380dp"
-                android:layout_height="380dp"
-                android:scaleY="1"
-                android:scaleX="0.8"
-                android:background="@drawable/background_data_forecast"
-                app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
-                app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
-                app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-                app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
+
+
 
             <LinearLayout
                 android:id="@+id/relativeLayout"
@@ -93,8 +89,8 @@
                         android:layout_width="200dp"
                         android:layout_height="90dp"
                         android:gravity="center"
-                        android:textAlignment="center"
                         android:hint="23º"
+                        android:textAlignment="center"
                         android:textColor="@color/color_200"
                         android:textColorHint="@color/color_200"
                         android:textSize="60sp"
@@ -144,10 +140,8 @@
                         android:layout_marginTop="80dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -159,7 +153,8 @@
                 android:layout_marginBottom="270dp"
                 android:background="@drawable/ic_rectangle_round_mini"
                 android:gravity="center"
-                android:text="Sunday, 8 march 2021"
+                android:hint="Sunday, 8 march 2021"
+                android:textColorHint="@color/color_1000"
                 android:textStyle="bold"
                 android:textColor="@color/color_1000"
                 android:textSize="11sp"
@@ -370,7 +365,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.8" />
+                        app:layout_constraintGuide_begin="256dp" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline2"

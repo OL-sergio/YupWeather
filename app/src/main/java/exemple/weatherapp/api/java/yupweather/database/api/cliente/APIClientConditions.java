@@ -1,5 +1,6 @@
 package exemple.weatherapp.api.java.yupweather.database.api.cliente;
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

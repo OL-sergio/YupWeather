@@ -3,21 +3,18 @@ package exemple.weatherapp.api.java.yupweather;
 import static java.lang.Integer.parseInt;
 
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.*;
+import static exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts.setToastAlert;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -25,11 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import exemple.weatherapp.api.java.yupweather.adapter.HoursForecast;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private Call<WeatherMainDay> dayCallMain;
     private ErrorResponse errorResponse;
 
+    private List<String> hoursForecastList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,16 @@ public class MainActivity extends AppCompatActivity {
         dayCallConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
         dayCallMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
 
+        hoursForecastList.add("12:00 PM");
+        hoursForecastList.add("1:00 PM");
+        hoursForecastList.add("1:00 PM");
+        hoursForecastList.add("2:00 PM");
+        hoursForecastList.add("3:00 PM");
+        hoursForecastList.add("4:00 PM");
+
+        RecyclerView recyclerView = binding.recyclerViewForecastMini;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(new HoursForecast(hoursForecastList, getApplicationContext()));
 
     }
 
@@ -142,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
 
-                        CustomAlerts.setToastAlert(MainActivity.this, errorTextConvert);
+                        setToastAlert(MainActivity.this, errorTextConvert);
 
                     }
                 }
@@ -164,14 +177,14 @@ public class MainActivity extends AppCompatActivity {
                 .append(weatherMainDay.getCountry())
         );
 
-        String convertedHour =  convertHour(weatherMainDay.getDt());
+        String convertedHour =  simpleConvertHour(weatherMainDay.getDt());
 
         TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
         toolbarWeatherLastUpdate.setText(new StringBuilder()
                 .append("Last Update: ")
                 .append(convertedHour));
 
-        String convertedDate = convertDate(weatherMainDay.getDt());
+        String convertedDate = simpleConvertDate(weatherMainDay.getDt());
         dateTimeDay.setText(convertedDate);
 
         todayWeather.setText(new StringBuilder()
@@ -182,14 +195,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getConditionWeather() {
-        dayCallConditions.clone();
-        dayCallConditions.enqueue(new Callback<WeatherConditionsDay>() {
+
+        dayCallConditions.clone().enqueue(new Callback<WeatherConditionsDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<WeatherConditionsDay> call, Response<WeatherConditionsDay> response) {
                 if (response.isSuccessful()) {
                     WeatherConditionsDay weatherConditionsDay = response.body();
+                    assert weatherConditionsDay != null;
                     getWeatherConditionDayData(weatherConditionsDay);
                     Log.d("Success C: ", response.message() + " " + response.code());
 
@@ -226,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
                         */
 
-                        CustomAlerts.setToastAlert(MainActivity.this, errorTextConvert);
+                        setToastAlert(MainActivity.this, errorTextConvert);
 
                     }
                 }
