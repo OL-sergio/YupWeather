@@ -1,18 +1,10 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 
 
 public final class Converts {

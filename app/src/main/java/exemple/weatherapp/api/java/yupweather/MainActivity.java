@@ -1,8 +1,13 @@
 package exemple.weatherapp.api.java.yupweather;
 
 import static java.lang.Integer.parseInt;
-
-import static exemple.weatherapp.api.java.yupweather.utilities.Converts.*;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertDoubleToInteger;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertErrorMessageSize;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertKevinToCelsius;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertMeterToKilometer;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertWindSpeedMeterToKilometer;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertDate;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertHour;
 import static exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts.setToastAlert;
 
 import android.Manifest;
@@ -28,19 +33,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.adapter.HoursForecast;
-import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
+import exemple.weatherapp.api.java.yupweather.adapter.HoursForecastAdapter;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientHours;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceHours;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMain;
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherConditionsHours;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
@@ -66,12 +72,18 @@ public class MainActivity extends AppCompatActivity {
 
     private DataServiceConditions dataServiceConditions;
     private DataServiceMain dataServiceMain;
+    private DataServiceHours dataServiviceHours;
 
-    private Call<WeatherConditionsDay> dayCallConditions;
-    private Call<WeatherMainDay> dayCallMain;
+    private Call<WeatherConditionsDay> callDayConditions;
+    private Call<WeatherMainDay> callDayMain;
+    private Call<WeatherConditionsHours> callDayHourly ;
+
+
+    private HoursForecastAdapter hoursForecastAdapter;
+    private RecyclerView recyclerView;
+
     private ErrorResponse errorResponse;
 
-    private List<String> hoursForecastList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,34 +112,78 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        getLocationData();
+
         String latitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
         String longitude = SharedPreferenceLocation.getLongitudeLocation(getBaseContext());
 
-        Log.d("LocationGetShared: ", latitude + " , " + longitude );
-
-        getLocationData();
+        Log.d("LocationGet: ", "lat: " + latitude + " , " + "long: " + longitude );
 
         dataServiceConditions = APIClientConditions.getConditionsInstance().create(DataServiceConditions.class);
         dataServiceMain = APIClientMain.getMainInstance().create(DataServiceMain.class);
+        dataServiviceHours = APIClientHours.getHoursInstance().create(DataServiceHours.class);
 
-        dayCallConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
-        dayCallMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
 
-        hoursForecastList.add("12:00 PM");
-        hoursForecastList.add("1:00 PM");
-        hoursForecastList.add("1:00 PM");
-        hoursForecastList.add("2:00 PM");
-        hoursForecastList.add("3:00 PM");
-        hoursForecastList.add("4:00 PM");
+        callDayConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
+        callDayMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
+        callDayHourly = dataServiviceHours.getHourlyWeatherConditions(latitude, longitude, Constants.CMD, Constants.API_KEY, Constants.UNITS_FORMAT);
 
-        RecyclerView recyclerView = binding.recyclerViewForecastMini;
+        recyclerView = binding.recyclerViewForecastMini;
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new HoursForecast(hoursForecastList, getApplicationContext()));
+
+        getHoursForecast();
 
     }
 
+    private void getHoursForecast() {
+        callDayHourly.clone().enqueue(new Callback<WeatherConditionsHours>() {
+            @Override
+            public void onResponse(Call<WeatherConditionsHours> call, Response <WeatherConditionsHours> response) {
+
+                if (response.isSuccessful()) {
+                    WeatherConditionsHours weatherConditionsHours = response.body();
+                    assert weatherConditionsHours != null;
+                    HoursForecastAdapter hoursForecastAdapter = new HoursForecastAdapter(weatherConditionsHours.getList(), MainActivity.this);
+                    recyclerView.setAdapter(hoursForecastAdapter);
+
+                    Log.d("Success H: ", "Response: " + new Gson().toJson(weatherConditionsHours) );
+                    Log.d("Success H: ", response.message() + " " + response.code());
+
+                }else {
+                    try {
+                        errorResponse = APIClientHours.parseError(response);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (errorResponse != null) {
+                        // Handle error response
+                        Log.e("MainActivity", "Error code H: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+
+                        String errorText = errorResponse.getMessage();
+                        convertErrorMessageSize(errorText);
+                        String errorTextConvert = convertErrorMessageSize(errorText);
+
+                        //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
+
+                        setToastAlert(MainActivity.this, errorTextConvert);
+
+                    }
+                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
+
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<WeatherConditionsHours> call, Throwable t) {
+                Log.d("Network error H: ", t.getMessage());
+            }
+        });
+    }
+
     private void getMainWeather() {
-        dayCallMain.clone().enqueue(new Callback<WeatherMainDay>() {
+        callDayMain.clone().enqueue(new Callback<WeatherMainDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -139,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Success M: ", response.message() + " " + response.code());
 
                 } else {
-                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
                     try {
                         errorResponse = APIClientMain.parseError(response);
                     } catch (IOException e) {
@@ -147,17 +202,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (errorResponse != null) {
                         // Handle error response
-                        Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+                        Log.e("MainActivity", "Error code M: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
 
                         String errorText = errorResponse.getMessage();
                         convertErrorMessageSize(errorText);
                         String errorTextConvert = convertErrorMessageSize(errorText);
-
                         //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
 
                         setToastAlert(MainActivity.this, errorTextConvert);
 
                     }
+                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
+
                 }
             }
 
@@ -196,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getConditionWeather() {
 
-        dayCallConditions.clone().enqueue(new Callback<WeatherConditionsDay>() {
+        callDayConditions.clone().enqueue(new Callback<WeatherConditionsDay>() {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -205,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
                     WeatherConditionsDay weatherConditionsDay = response.body();
                     assert weatherConditionsDay != null;
                     getWeatherConditionDayData(weatherConditionsDay);
+                    Log.d("Success C: ", "Response: " + new Gson().toJson(weatherConditionsDay) );
                     Log.d("Success C: ", response.message() + " " + response.code());
 
                 } else {
@@ -217,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (errorResponse != null) {
                         // Handle error response
-                        Log.e("MainActivity", "Error code: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+                        Log.e("MainActivity", "Error code C: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
 
                         String errorText = errorResponse.getMessage();
                         convertErrorMessageSize(errorText);
@@ -315,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
             //String textLatitude = String.valueOf((int) Math.round(latitude));
             //String textLongitude = String.valueOf((int) Math.round(longitude));
 
-            Log.d("Location: ", textLatitude + " , " + textLongitude );
+            Log.d("LocationSet: ", "lat: " + textLatitude + " , " + "long: " + textLongitude );
 
             SharedPreferenceLocation.setLocation(
                     getBaseContext(),
@@ -345,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         getMainWeather();
         getConditionWeather();
+        getHoursForecast();
     }
 
     @Override

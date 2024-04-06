@@ -70,9 +70,7 @@ public class WeatherMainDay {
             String dt,
             String name,
             String country
-    )
-
-    {
+    ) {
         this.main = main;
         this.description = description;
         this.icon = icon;
@@ -128,4 +126,5 @@ public class WeatherMainDay {
     public void setCountry(String country) {
         this.country = country;
     }
+
 }

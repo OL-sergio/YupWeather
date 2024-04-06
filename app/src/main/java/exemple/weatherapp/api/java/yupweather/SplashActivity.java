@@ -1,7 +1,5 @@
 package exemple.weatherapp.api.java.yupweather;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.AnimationSet;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import exemple.weatherapp.api.java.yupweather.databinding.ActivitySplashBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Animations;

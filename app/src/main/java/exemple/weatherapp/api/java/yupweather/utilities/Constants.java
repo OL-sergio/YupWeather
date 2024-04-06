@@ -10,12 +10,17 @@ public final class Constants {
     public static final String API_KEY = BuildConfig.API_KEY;
     //public static final String BASE_URL = "https://pro.openweathermap.org/data/2.5/";
     public static final String BASE_URL = BuildConfig.BASE_URL;
+    //https://pro.openweathermap.org/data/2.5/forecast/
+    public static final String BASE_URL_HOURS = "https://pro.openweathermap.org/data/2.5/forecast/";
 
-    //DataService interface
+    //DataService
+    public static final String HOURLY = "hourly";
     public static final String WEATHER = "weather";
     public static final String LAT = "lat";
     public static final String LON = "lon";
     public static final String APPID = "appid";
+
+
 
     //DeserializerConditions
     public static final String TEMP = "temp";
@@ -27,6 +32,7 @@ public final class Constants {
     public static final String SYS = "sys";
     public static final String WIND = "wind";
 
+
     //DeserializerMain
     public static final String NAME = "name";
     public static final String MAIN = "main";
@@ -34,6 +40,12 @@ public final class Constants {
     public static final String DESCRIPTION = "description";
     public static final String ICON = "icon";
     public static final String DATE_TIME = "dt";
+
+    //DataServiceHours
+    public static final int CMD = 10;
+    public static final String CNT = "cnt";
+    public static final String UNITS = "units";
+    public static final String UNITS_FORMAT = "metric";
 
 
     //SharedPreferenceLocation

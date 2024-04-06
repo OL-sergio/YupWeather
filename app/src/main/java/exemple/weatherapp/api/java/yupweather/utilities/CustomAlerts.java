@@ -5,17 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import exemple.weatherapp.api.java.yupweather.R;
 import exemple.weatherapp.api.java.yupweather.databinding.CustomToastBinding;
 
 public class CustomAlerts extends AppCompatActivity {
