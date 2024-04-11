@@ -2,4 +2,5 @@
     <string name="app_name">YupWeather</string>
     <string name="special_character"> º</string>
     <string name="celcius">C</string>
+    <string name="_0f_c">%.0f°C</string>
 </resources>

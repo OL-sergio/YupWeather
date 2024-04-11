@@ -1,10 +1,14 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
+import static java.util.Locale.US;
+
 import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 public final class Converts {
@@ -33,10 +37,12 @@ public final class Converts {
 
 
     @SuppressLint("SimpleDateFormat")
-    public static String simpleConvertHour(String hours) {
-        return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    public static String simpleConvertHourSeconds(String hours) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss ", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+        Date date = new Date();
+        return dateFormat.format(date);
     }
-
 
 
     public static String convertErrorMessageSize(String message) {

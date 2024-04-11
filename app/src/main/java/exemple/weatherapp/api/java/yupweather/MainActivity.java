@@ -7,10 +7,11 @@ import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertK
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertMeterToKilometer;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertWindSpeedMeterToKilometer;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertDate;
-import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertHour;
+import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertHourSeconds;
 import static exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts.setToastAlert;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView pressureDay;
     private TextView windDay;
     private TextView humidityDay;
+    private TextView textViewForecastDays ;
+    private ImageView imageViewTodayIconForecast;
+
 
     private GPSTracker gpsTracker;
 
@@ -78,10 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private Call<WeatherMainDay> callDayMain;
     private Call<WeatherConditionsHours> callDayHourly ;
 
-
-    private HoursForecastAdapter hoursForecastAdapter;
     private RecyclerView recyclerView;
-
     private ErrorResponse errorResponse;
 
 
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
         getLocationData();
 
         String latitude = SharedPreferenceLocation.getLatitudeLocation(getBaseContext());
@@ -132,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         getHoursForecast();
+
+        textViewForecastDays.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DaysForecastActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -233,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 .append(weatherMainDay.getCountry())
         );
 
-        String convertedHour =  simpleConvertHour(weatherMainDay.getDt());
+        String convertedHour =  simpleConvertHourSeconds(weatherMainDay.getDt());
 
         TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
         toolbarWeatherLastUpdate.setText(new StringBuilder()
@@ -245,8 +254,73 @@ public class MainActivity extends AppCompatActivity {
 
         todayWeather.setText(new StringBuilder()
                 .append(weatherMainDay.getMain())
-                .append(" - ")
+                .append(", ")
                 .append(weatherMainDay.getDescription()));
+
+
+        String mICON_URL = "https://openweathermap.org/img/wn/" + weatherMainDay.getIcon() + "@2x.png";
+        switch (weatherMainDay.getIcon()) {
+
+            case "01d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "01n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "02d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "02n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "03d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "03n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "04d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "04n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "09d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "09n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "10d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "10n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "11d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "11n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "13d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+                break;
+            case "13n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "50d":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            case "50n":
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+            default:
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_alert)
+                        .into(imageViewTodayIconForecast);
+                break;
+        }
     }
 
 
@@ -314,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
     private void getWeatherConditionDayData(WeatherConditionsDay weatherConditionsDay) {
 
         int temp = (int) convertKevinToCelsius(weatherConditionsDay.getTemp());
-        temperatureDay.setText(new StringBuilder().append(temp).append(getString(R.string.special_character)).append(getString(R.string.celcius)));
+        temperatureDay.setText(new StringBuilder().append(temp).append(getString(R.string.special_character)));
 
         int visibility = (int) convertMeterToKilometer(parseInt(weatherConditionsDay.getVisibility()));
 
@@ -388,6 +462,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void components() {
+        textViewForecastDays = binding.textViewNextSevenDays;
+        imageViewTodayIconForecast = binding.imageViewTodayIconForecast;
         dateTimeDay = binding.textViewDateForecast;
         temperatureDay = binding.textViewTodayTemperature;
         todayWeather = binding.textViewTodayWeather;

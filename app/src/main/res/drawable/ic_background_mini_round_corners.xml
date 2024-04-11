@@ -2,18 +2,17 @@
     <!-- drawable/rectangle_3.xml -->
 <vector
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="92dp"
-        android:height="132dp"
+        android:width="90dp"
+        android:height="145dp"
         android:viewportWidth="92"
-        android:viewportHeight="132"
-        >
+        android:viewportHeight="132">
+
         <group>
             <clip-path
                 android:pathData="M25 0H67C80.8071 0 92 11.1929 92 25V107C92 120.807 80.8071 132 67 132H25C11.1929 132 0 120.807 0 107V25C0 11.1929 11.1929 0 25 0Z"
                 />
             <path
                 android:pathData="M0 0V132H92V0"
-                android:fillColor="@color/color_200"
-                />
+                android:fillColor="@color/color_200" />
         </group>
 </vector>
