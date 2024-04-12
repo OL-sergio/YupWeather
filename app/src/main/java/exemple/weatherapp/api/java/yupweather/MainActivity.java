@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 .append(weatherMainDay.getCountry())
         );
 
-        String convertedHour =  simpleConvertHourSeconds(weatherMainDay.getDt());
+        String convertedHour =  simpleConvertHourSeconds(weatherMainDay.getDt(), weatherMainDay.getTimezone());
 
         TextView toolbarWeatherLastUpdate = binding.toolbarMain.textViewWeatherData;
         toolbarWeatherLastUpdate.setText(new StringBuilder()

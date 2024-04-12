@@ -3,12 +3,22 @@ package exemple.weatherapp.api.java.yupweather.utilities;
 import static java.util.Locale.US;
 
 import android.annotation.SuppressLint;
+import android.icu.text.TimeZoneFormat;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 
 
 public final class Converts {
@@ -36,10 +46,18 @@ public final class Converts {
     }
 
 
+
     @SuppressLint("SimpleDateFormat")
-    public static String simpleConvertHourSeconds(String hours) {
+    public static String simpleConvertHourSeconds(String hours, long timeZone) {
+
+
+        ZoneOffset offset = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            offset = ZoneOffset.ofTotalSeconds((int) timeZone);
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss ", Locale.getDefault());
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT" +  offset));
         Date date = new Date();
         return dateFormat.format(date);
     }

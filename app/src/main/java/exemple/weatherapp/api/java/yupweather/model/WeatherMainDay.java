@@ -62,6 +62,8 @@ public class WeatherMainDay {
     private String dt;
     private String name;
     private String country;
+    private long timezone;
+
 
     public WeatherMainDay(
             String main,
@@ -69,7 +71,8 @@ public class WeatherMainDay {
             String icon,
             String dt,
             String name,
-            String country
+            String country,
+            long timezone
     ) {
         this.main = main;
         this.description = description;
@@ -77,6 +80,7 @@ public class WeatherMainDay {
         this.dt = dt;
         this.name = name;
         this.country = country;
+        this.timezone = timezone;
     }
 
     public String getMain() {
@@ -127,4 +131,11 @@ public class WeatherMainDay {
         this.country = country;
     }
 
+    public long getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(long timezone) {
+        this.timezone = timezone;
+    }
 }

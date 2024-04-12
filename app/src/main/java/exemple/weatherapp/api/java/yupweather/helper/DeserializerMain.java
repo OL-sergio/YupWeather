@@ -29,13 +29,16 @@ public class DeserializerMain implements JsonDeserializer<WeatherMainDay> {
 
         String country = json.getAsJsonObject().get(Constants.SYS).getAsJsonObject().get(Constants.COUNTRY).getAsString();
 
+        long timezone = json.getAsJsonObject().get(Constants.TIME_ZONE).getAsLong();
+
         return new WeatherMainDay(
                 main,
                 description,
                 icon,
                 dateTime,
                 name,
-                country
+                country,
+                timezone
         );
     }
 }

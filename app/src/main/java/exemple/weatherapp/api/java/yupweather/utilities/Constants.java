@@ -40,6 +40,7 @@ public final class Constants {
     public static final String DESCRIPTION = "description";
     public static final String ICON = "icon";
     public static final String DATE_TIME = "dt";
+    public static final String TIME_ZONE = "timezone";
 
     //DataServiceHours
     public static final int CMD = 10;
