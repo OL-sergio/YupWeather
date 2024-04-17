@@ -18,7 +18,7 @@
             android:layout_height="890dp">
 
             <include
-                android:id="@+id/toolbar_main"
+                android:id="@+id/toolbar_days_forecast"
                 layout="@layout/toolbar_days"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +33,10 @@
                 android:background="@drawable/ic_rectangle_stroke_transparent_mini"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_main" />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_days_forecast" />
 
             <ImageView
-                android:id="@+id/imageView_dayForecastIcon_7Days"
+                android:id="@+id/imageView_dayForecastIcon_Days"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_marginStart="32dp"
@@ -48,7 +48,7 @@
 
 
             <TextView
-                android:id="@+id/textView_dayForecastTemp_7Days"
+                android:id="@+id/textView_dayForecastTemp_Days"
                 android:layout_width="120dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
@@ -61,14 +61,14 @@
                 android:textColor="@color/color_200"
                 android:textSize="70sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView_dayForecastData_7Days"
-                app:layout_constraintStart_toEndOf="@+id/imageView_dayForecastIcon_7Days"
+                app:layout_constraintBottom_toTopOf="@+id/textView_dayForecastData_Days"
+                app:layout_constraintStart_toEndOf="@+id/imageView_dayForecastIcon_Days"
                 app:layout_constraintEnd_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                android:id="@+id/textView_dayForecastData_7Days"
+                android:id="@+id/textView_dayForecastData_Days"
                 android:layout_width="150dp"
                 android:layout_height="16dp"
                 android:layout_marginBottom="24dp"
@@ -79,9 +79,9 @@
                 android:textSize="12dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/view"
-                app:layout_constraintEnd_toEndOf="@+id/textView_dayForecastTemp_7Days"
-                app:layout_constraintStart_toStartOf="@+id/textView_dayForecastTemp_7Days"
-                app:layout_constraintTop_toBottomOf="@+id/textView_dayForecastTemp_7Days" />
+                app:layout_constraintEnd_toEndOf="@+id/textView_dayForecastTemp_Days"
+                app:layout_constraintStart_toStartOf="@+id/textView_dayForecastTemp_Days"
+                app:layout_constraintTop_toBottomOf="@+id/textView_dayForecastTemp_Days" />
 
             <View
                 android:id="@+id/view2"
@@ -119,14 +119,15 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="70dp"
                 android:text="Future Weather"
-                android:textSize="26sp"
+                android:textColor="@color/color_1000"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/view3"
                 app:layout_constraintStart_toStartOf="@+id/view3"
                 app:layout_constraintTop_toTopOf="@+id/view3" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_7DaysForecast"
+                android:id="@+id/recyclerView_DaysForecast"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"

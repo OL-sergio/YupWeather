@@ -7,71 +7,73 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView_rowView7daysIconForecast"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/imageView_rowViewDaysIconForecast"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
         android:background="@drawable/ic_clear_day"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toTopOf="@+id/view4"
-        app:layout_constraintEnd_toStartOf="@+id/textView_rowView7daysTempForecast"
+        app:layout_constraintEnd_toStartOf="@+id/textView_rowViewDaysTempForecast"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_rowView7daysTempForecast"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
+        android:id="@+id/textView_rowViewDaysTempForecast"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:text="29º"
-        android:textSize="50dp"
+        android:textColor="@color/color_1000"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_rowView7daysIconForecast"
-        app:layout_constraintEnd_toStartOf="@+id/textView_rowView7daysTitleForecast"
-        app:layout_constraintStart_toEndOf="@+id/imageView_rowView7daysIconForecast"
-        app:layout_constraintTop_toTopOf="@+id/imageView_rowView7daysIconForecast" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_rowViewDaysIconForecast"
+        app:layout_constraintEnd_toStartOf="@+id/textView_rowViewDaysTitleForecast"
+        app:layout_constraintStart_toEndOf="@+id/imageView_rowViewDaysIconForecast"
+        app:layout_constraintTop_toTopOf="@+id/imageView_rowViewDaysIconForecast" />
 
     <TextView
-        android:id="@+id/textView_rowView7daysTitleForecast"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="Moday"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_rowView7daysTempForecast"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_rowView7daysTempForecast"
-        app:layout_constraintTop_toTopOf="@+id/textView_rowView7daysTempForecast" />
-
-    <TextView
-        android:id="@+id/textView_rowView7daysDateForecast"
+        android:id="@+id/textView_rowViewDaysTitleForecast"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="@color/color_1000"
+        android:text="Moday"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_rowViewDaysTempForecast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_rowViewDaysTempForecast"
+        app:layout_constraintTop_toTopOf="@+id/textView_rowViewDaysTempForecast" />
+
+    <TextView
+        android:id="@+id/textView_rowViewDaysDateForecast"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="32dp"
         android:text="9 March 2021"
-        android:textColor="@color/color_900"
+        android:textColor="@color/color_50"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView_rowView7daysTitleForecast"
-        app:layout_constraintStart_toEndOf="@+id/textView_rowView7daysTempForecast"
-        app:layout_constraintTop_toBottomOf="@+id/textView_rowView7daysTitleForecast" />
+        app:layout_constraintEnd_toEndOf="@+id/textView_rowViewDaysTitleForecast"
+        app:layout_constraintStart_toEndOf="@+id/textView_rowViewDaysTempForecast"
+        app:layout_constraintTop_toBottomOf="@+id/textView_rowViewDaysTitleForecast" />
 
     <View
         android:id="@+id/view4"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/color_50"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView_rowView7daysDateForecast"
-        app:layout_constraintStart_toStartOf="@+id/imageView_rowView7daysIconForecast"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_rowView7daysIconForecast" />
+        app:layout_constraintEnd_toEndOf="@+id/textView_rowViewDaysDateForecast"
+        app:layout_constraintStart_toStartOf="@+id/imageView_rowViewDaysIconForecast"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_rowViewDaysIconForecast" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

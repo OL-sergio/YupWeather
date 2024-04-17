@@ -8,8 +8,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60sp"
         android:background="@android:color/transparent"
+        android:paddingTop="6dp"
         android:paddingBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +57,4 @@
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
