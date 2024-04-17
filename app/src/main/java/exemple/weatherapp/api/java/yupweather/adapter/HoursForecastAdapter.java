@@ -37,7 +37,7 @@ public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastAdap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_hours_forecast, parent, false);
+       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_view_hours_forecast, parent, false);
        return new MyViewHolder(view);
     }
 

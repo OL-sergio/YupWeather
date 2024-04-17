@@ -8,7 +8,6 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60sp"
         android:background="@android:color/transparent"
         android:paddingBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,25 +46,25 @@
                 tools:ignore="RtlSymmetry">
 
                 <TextView
-                    android:id="@+id/textView_selectedCity"
+                    android:id="@+id/textView_toolbarDaysSelectedCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="-40dp"
                     android:layout_marginBottom="6dp"
-                    android:text="Title"
+                    android:text="Toaday´s Weather"
                     android:textAlignment="center"
                     android:textColor="@color/color_200"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView_weatherData"
+                    android:id="@+id/textView_toolbarDaysWeatherData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Date"
+                    android:text="Sunday, 8 March 2021"
                     android:layout_marginStart="-40dp"
                     android:textAlignment="center"
                     android:textColor="@color/color_100"
