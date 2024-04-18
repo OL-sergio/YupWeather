@@ -42,7 +42,7 @@ public final class Converts {
 
     @SuppressLint("SimpleDateFormat")
     public static String simpleConvertDate(String date) {
-     return new SimpleDateFormat( "EEEE, MMMM, dd, yyyy").format(new Date());
+     return new SimpleDateFormat( "EEEE, dd MMMM, yyyy").format(new Date());
     }
 
 

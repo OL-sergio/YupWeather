@@ -26,7 +26,7 @@ public static Retrofit getMainInstance(){
             builder.registerTypeAdapter(WeatherMainDay.class, new DeserializerMain() );
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(Constants.BASE_URL_DAY)
                     .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
 

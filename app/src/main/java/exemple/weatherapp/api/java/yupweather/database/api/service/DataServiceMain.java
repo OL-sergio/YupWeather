@@ -6,6 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+
+//https://pro.openweathermap.org/data/2.5/weather?lat=37&lon=-122&appid=apikey
 public interface DataServiceMain {
     @GET(Constants.WEATHER)
     Call<WeatherMainDay> getDayWeatherMain (

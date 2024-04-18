@@ -14,12 +14,12 @@ import java.util.List;
 
 import exemple.weatherapp.api.java.yupweather.R;
 
-public class DaysForecastAdapter extends RecyclerView.Adapter<DaysForecastAdapter.MyViewHolder> {
+public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.MyViewHolder> {
 
     private List<String> daysForecastList;
     private final Context context;
 
-    public DaysForecastAdapter(List<String> daysForecastList, Context context) {
+    public DailyForecastAdapter(List<String> daysForecastList, Context context) {
         this.daysForecastList = daysForecastList;
         this.context = context;
     }

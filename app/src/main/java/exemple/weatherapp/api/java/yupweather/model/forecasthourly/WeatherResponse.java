@@ -3,16 +3,14 @@ package exemple.weatherapp.api.java.yupweather.model.forecasthourly;
 
 import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.model.WeatherData;
-
-public class WeatherConditionsHours {
+public class WeatherResponse {
 
     private int cod;
     private int message;
     private int cnt;
     private List<WeatherData> list;
 
-    public WeatherConditionsHours() {
+    public WeatherResponse() {
     }
 
     public int getCod() {

@@ -21,15 +21,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import exemple.weatherapp.api.java.yupweather.R;
-import exemple.weatherapp.api.java.yupweather.model.WeatherData;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherData;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Main;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherItem;
 
-public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastAdapter.MyViewHolder>{
+public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAdapter.MyViewHolder>{
     private List<WeatherData> hoursForecastList;
     private final Context context;
 
-    public HoursForecastAdapter(List<WeatherData> hoursForecastList, Context context) {
+    public HourlyForecastAdapter(List<WeatherData> hoursForecastList, Context context) {
         this.hoursForecastList = hoursForecastList;
         this.context = context;
     }
@@ -68,61 +68,61 @@ public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastAdap
         switch (weatherItem.getIcon()) {
 
             case "01d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "01n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "02d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "02n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "03d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "03n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "04d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "04n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "09d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "09n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "10d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "10n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "11d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "11n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "13d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "13n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "50d":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             case "50n":
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
             default:
-                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_alert)
+                Glide.with(context).load(iconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(holder.imageForecastIcon);
                 break;
         }

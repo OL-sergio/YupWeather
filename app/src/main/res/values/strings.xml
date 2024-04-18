@@ -3,4 +3,5 @@
     <string name="special_character"> º</string>
     <string name="celcius">C</string>
     <string name="_0f_c">%.0f°C</string>
+    <string name="today_s_weather">Today\'s Weather</string>
 </resources>

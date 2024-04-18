@@ -24,5 +24,4 @@ public class SystemUi {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         return uiOptions;
     }
-
 }

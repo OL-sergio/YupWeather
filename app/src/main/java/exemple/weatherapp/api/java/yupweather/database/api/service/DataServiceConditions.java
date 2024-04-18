@@ -8,8 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 //https://pro.openweathermap.org/data/2.5/weather?lat=37&lon=-122&appid=apikey
-//https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=37&lon=-122&cnt=4&appid=apikey
-//https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=37&lon=-122&cnt=4&appid=apikey&units=metric
+
 
 public interface DataServiceConditions {
 

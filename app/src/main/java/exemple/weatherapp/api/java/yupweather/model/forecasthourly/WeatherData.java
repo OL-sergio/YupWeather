@@ -1,4 +1,4 @@
-package exemple.weatherapp.api.java.yupweather.model;
+package exemple.weatherapp.api.java.yupweather.model.forecasthourly;
 
 import java.util.List;
 

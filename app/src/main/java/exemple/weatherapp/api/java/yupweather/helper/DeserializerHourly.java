@@ -12,18 +12,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.model.WeatherData;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherData;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Clouds;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Main;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Sys;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherConditionsHours;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherResponse;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherItem;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Wind;
 
-public class DeserializerHours implements JsonDeserializer<WeatherConditionsHours>{
+public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
 
     @Override
-    public WeatherConditionsHours deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public WeatherResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
 
         JsonObject jsonObject = json.getAsJsonObject();
@@ -73,7 +73,7 @@ public class DeserializerHours implements JsonDeserializer<WeatherConditionsHour
 
         }
 
-        WeatherConditionsHours weatherResponse = new WeatherConditionsHours();
+        WeatherResponse weatherResponse = new WeatherResponse();
         weatherResponse.setCod(cod);
         weatherResponse.setMessage(message);
         weatherResponse.setCnt(cnt);

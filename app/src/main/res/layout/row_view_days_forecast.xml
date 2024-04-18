@@ -57,7 +57,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="32dp"
         android:text="9 March 2021"
-        android:textColor="@color/color_50"
+        android:textColor="@color/color_900"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -6,7 +6,7 @@
     android:background="@drawable/background_days_forecast"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DaysForecastActivity">
+    tools:context=".DailyForecastActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,10 +20,10 @@
             <include
                 android:id="@+id/toolbar_days_forecast"
                 layout="@layout/toolbar_days"
+                app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <View
                 android:id="@+id/view"
@@ -35,17 +35,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_days_forecast" />
 
+
             <ImageView
                 android:id="@+id/imageView_dayForecastIcon_Days"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginStart="32dp"
-                android:background="@drawable/ic_clear_day"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="28dp"
+                android:importantForAccessibility="no"
+                android:scaleX="1.8"
+                android:scaleY="1.8"
                 app:layout_constraintBottom_toBottomOf="@+id/view"
+                app:layout_constraintEnd_toStartOf="@+id/textView_dayForecastData_Days"
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/view"
-                android:importantForAccessibility="no" />
-
+                app:layout_constraintVertical_bias="0.48" />
 
             <TextView
                 android:id="@+id/textView_dayForecastTemp_Days"
@@ -55,15 +58,15 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:paddingStart="5dp"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:text="24º"
                 android:textAlignment="center"
                 android:textColor="@color/color_200"
                 android:textSize="70sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView_dayForecastData_Days"
-                app:layout_constraintStart_toEndOf="@+id/imageView_dayForecastIcon_Days"
                 app:layout_constraintEnd_toEndOf="@+id/view"
+                app:layout_constraintStart_toEndOf="@+id/imageView_dayForecastIcon_Days"
                 app:layout_constraintTop_toTopOf="@+id/view"
                 tools:ignore="RtlSymmetry" />
 
@@ -72,10 +75,10 @@
                 android:layout_width="150dp"
                 android:layout_height="16dp"
                 android:layout_marginBottom="24dp"
+                android:padding="1dp"
                 android:text="Moon Cloud Fast Wind"
                 android:textAlignment="center"
                 android:textColor="@color/color_200"
-                android:padding="1dp"
                 android:textSize="12dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/view"

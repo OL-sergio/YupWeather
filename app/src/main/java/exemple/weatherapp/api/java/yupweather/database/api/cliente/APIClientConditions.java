@@ -24,7 +24,7 @@ public class APIClientConditions {
             builder.registerTypeAdapter(WeatherConditionsDay.class, new DeserializerConditions());
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(Constants.BASE_URL_DAY)
                     .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
 
