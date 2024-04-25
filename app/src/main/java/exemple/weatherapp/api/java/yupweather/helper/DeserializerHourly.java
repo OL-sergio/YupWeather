@@ -12,18 +12,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherData;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyData;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Clouds;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyResponse;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Main;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Sys;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherResponse;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherItem;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyItem;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Wind;
 
-public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
+public class DeserializerHourly implements JsonDeserializer<HourlyResponse>{
 
     @Override
-    public WeatherResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public HourlyResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
 
         JsonObject jsonObject = json.getAsJsonObject();
@@ -32,7 +32,7 @@ public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
         int cnt = jsonObject.get("cnt").getAsInt();
 
         JsonArray listArray = jsonObject.getAsJsonArray("list");
-        List<WeatherData> list = new ArrayList<>();
+        List<HourlyData> list = new ArrayList<>();
 
         for (JsonElement element : listArray) {
 
@@ -42,11 +42,11 @@ public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
             Main main = context.deserialize(listObj.get("main"), Main.class);
 
             JsonArray weatherArray = listObj.getAsJsonArray("weather");
-            List<WeatherItem> weatherItems = new ArrayList<>();
+            List<HourlyItem> weatherItems = new ArrayList<>();
 
             for (JsonElement weatherElement : weatherArray) {
                 JsonObject weatherObj = weatherElement.getAsJsonObject();
-                WeatherItem weatherItem = context.deserialize(weatherObj, WeatherItem.class);
+                HourlyItem weatherItem = context.deserialize(weatherObj, HourlyItem.class);
                 weatherItems.add(weatherItem);
             }
 
@@ -59,7 +59,7 @@ public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
             Sys sys = context.deserialize(listObj.get("sys"), Sys.class);
             String dtTxt = listObj.get("dt_txt").getAsString();
 
-            WeatherData weatherData = new WeatherData();
+            HourlyData weatherData = new HourlyData();
             weatherData.setDt(dt);
             weatherData.setMain(main);
             weatherData.setWeather(weatherItems);
@@ -73,7 +73,7 @@ public class DeserializerHourly implements JsonDeserializer<WeatherResponse>{
 
         }
 
-        WeatherResponse weatherResponse = new WeatherResponse();
+        HourlyResponse weatherResponse = new HourlyResponse();
         weatherResponse.setCod(cod);
         weatherResponse.setMessage(message);
         weatherResponse.setCnt(cnt);

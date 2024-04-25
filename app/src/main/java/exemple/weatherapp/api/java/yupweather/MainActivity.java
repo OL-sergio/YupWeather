@@ -44,7 +44,7 @@ import java.io.IOException;
 import exemple.weatherapp.api.java.yupweather.adapter.HourlyForecastAdapter;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
-import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientHours;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientHourly;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceHourly;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMain;
@@ -53,7 +53,7 @@ import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts;
 import exemple.weatherapp.api.java.yupweather.utilities.GPSTracker;
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView forecastDays ;
     private ImageView todayIconForecast;
 
-
     private GPSTracker gpsTracker;
 
     private DataServiceConditions dataServiceConditions;
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Call<WeatherConditionsDay> callDayConditions;
     private Call<WeatherMainDay> callDayMain;
-    private Call<WeatherResponse> callDayHourly ;
+    private Call<HourlyResponse> callDayHourly ;
 
     private RecyclerView recyclerView;
     private ErrorResponse errorResponse;
@@ -137,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
 
         dataServiceConditions = APIClientConditions.getConditionsInstance().create(DataServiceConditions.class);
         dataServiceMain = APIClientMain.getMainInstance().create(DataServiceMain.class);
-        dataServiviceHours = APIClientHours.getHoursInstance().create(DataServiceHourly.class);
+        dataServiviceHours = APIClientHourly.getHoursInstance().create(DataServiceHourly.class);
 
 
         callDayConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
         callDayMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
-        callDayHourly = dataServiviceHours.getHourlyWeatherConditions(latitude, longitude, Constants.CMD, Constants.API_KEY, Constants.UNITS_FORMAT);
+        callDayHourly = dataServiviceHours.getHourlyWeatherConditions(latitude, longitude, Constants.CMT_COUNT, Constants.API_KEY, Constants.UNITS_FORMAT);
 
         recyclerView = binding.recyclerViewForecastMini;
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -158,22 +157,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getHoursForecast() {
-        callDayHourly.clone().enqueue(new Callback<WeatherResponse>() {
+        callDayHourly.clone().enqueue(new Callback<HourlyResponse>() {
             @Override
-            public void onResponse(Call<WeatherResponse> call, Response <WeatherResponse> response) {
+            public void onResponse(Call<HourlyResponse> call, Response <HourlyResponse> response) {
 
                 if (response.isSuccessful()) {
-                    WeatherResponse weatherConditionsHours = response.body();
-                    assert weatherConditionsHours != null;
-                    HourlyForecastAdapter hoursForecastAdapter = new HourlyForecastAdapter(weatherConditionsHours.getList(), MainActivity.this);
-                    recyclerView.setAdapter(hoursForecastAdapter);
+                    HourlyResponse weatherForecastHourly = response.body();
+                    assert weatherForecastHourly != null;
+                    HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(weatherForecastHourly.getList(), MainActivity.this);
+                    recyclerView.setAdapter(hourlyForecastAdapter);
 
-                    Log.d("Success H: ", "Response: " + new Gson().toJson(weatherConditionsHours) );
+                    Log.d("Success H: ", "Response: " + new Gson().toJson(weatherForecastHourly) );
                     Log.d("Success H: ", response.message() + " " + response.code());
 
                 }else {
                     try {
-                        errorResponse = APIClientHours.parseError(response);
+                        errorResponse = APIClientHourly.parseError(response);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+            public void onFailure(Call<HourlyResponse> call, Throwable t) {
                 Log.d("Network error H: ", t.getMessage());
             }
         });
@@ -212,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WeatherMainDay> call, Response<WeatherMainDay> response) {
                 if (response.isSuccessful()) {
                     WeatherMainDay weatherMainDay = response.body();
+                    assert weatherMainDay != null;
                     getMainWeatherData(weatherMainDay);
                     Log.d("Success M: ", "Response: " + new Gson().toJson(weatherMainDay) );
                     Log.d("Success M: ", response.message() + " " + response.code());
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 .append("Last Update: ")
                 .append(convertedHour));
 
-        String convertedDate = simpleConvertDate(weatherMainDay.getDt());
+        String convertedDate = simpleConvertDate(weatherMainDay.getDt(), weatherMainDay.getTimezone());
         dateTimeDay.setText(convertedDate);
 
         todayWeather.setText(new StringBuilder()

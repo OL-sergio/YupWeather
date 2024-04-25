@@ -13,7 +13,6 @@ import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 
 public class DeserializerConditions implements JsonDeserializer<WeatherConditionsDay> {
 
-
     @Override
     public WeatherConditionsDay deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 

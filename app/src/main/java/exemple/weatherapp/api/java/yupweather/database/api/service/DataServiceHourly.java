@@ -1,6 +1,6 @@
 package exemple.weatherapp.api.java.yupweather.database.api.service;
 
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface DataServiceHourly {
     @GET(Constants.HOURLY)
-    Call<WeatherResponse> getHourlyWeatherConditions (
+    Call<HourlyResponse> getHourlyWeatherConditions (
             @Query(Constants.LAT) String latitude,
             @Query(Constants.LON) String longitude,
             @Query(Constants.CNT) int count,

@@ -1,6 +1,6 @@
 package exemple.weatherapp.api.java.yupweather.model.forecasthourly;
 
-public class WeatherItem {
+public class HourlyItem {
     private int id;
     private String main;
     private String description;

@@ -41,8 +41,18 @@ public final class Converts {
 
 
     @SuppressLint("SimpleDateFormat")
-    public static String simpleConvertDate(String date) {
-     return new SimpleDateFormat( "EEEE, dd MMMM, yyyy").format(new Date());
+    public static String simpleConvertDate(String date, long timeZone) {
+
+        ZoneOffset offset = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            offset = ZoneOffset.ofTotalSeconds((int) timeZone);
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM, yyyy", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT" +  offset));
+        Date setDate = new Date();
+        return dateFormat.format(setDate);
+
     }
 
 

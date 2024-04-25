@@ -20,7 +20,6 @@ public final class Constants {
     public static final String LON = "lon";
     public static final String APPID = "appid";
 
-
     //DeserializerConditions
     public static final String TEMP = "temp";
     public static final String HUMIDITY = "humidity";
@@ -44,7 +43,7 @@ public final class Constants {
 
     //DataServiceHourly
     public static final String HOURLY = "hourly";
-    public static final int CMD = 10;
+    public static final int CMT_COUNT = 10;
     public static final String CNT = "cnt";
     public static final String UNITS = "units";
     public static final String UNITS_FORMAT = "metric";

@@ -7,13 +7,13 @@ import java.io.IOException;
 
 import exemple.weatherapp.api.java.yupweather.helper.DeserializerHourly;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class APIClientHours {
+public class APIClientHourly {
     private static Retrofit retrofit = null;
 
     public static Retrofit getHoursInstance() {
@@ -21,7 +21,7 @@ public class APIClientHours {
         if (retrofit == null) {
 
             GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(  WeatherResponse.class, new DeserializerHourly());
+            builder.registerTypeAdapter(  HourlyResponse.class, new DeserializerHourly());
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL_FORECAST)

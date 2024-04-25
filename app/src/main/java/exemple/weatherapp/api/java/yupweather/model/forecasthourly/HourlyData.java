@@ -2,16 +2,10 @@ package exemple.weatherapp.api.java.yupweather.model.forecasthourly;
 
 import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Clouds;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Main;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Sys;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherItem;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Wind;
-
-public class WeatherData {
+public class HourlyData {
     private long dt;
     private Main main;
-    private List<WeatherItem> weather;
+    private List<HourlyItem> weather;
     private Clouds clouds;
     private Wind wind;
     private int visibility;
@@ -35,11 +29,11 @@ public class WeatherData {
         this.main = main;
     }
 
-    public List<WeatherItem> getWeather() {
+    public List<HourlyItem> getWeather() {
         return weather;
     }
 
-    public void setWeather(List<WeatherItem> weather) {
+    public void setWeather(List<HourlyItem> weather) {
         this.weather = weather;
     }
 

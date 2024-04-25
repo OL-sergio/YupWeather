@@ -37,14 +37,18 @@ import java.util.Objects;
 
 import exemple.weatherapp.api.java.yupweather.adapter.DailyForecastAdapter;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientDaily;
+import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientHourly;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
+import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceDaily;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMain;
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityDaysForecastBinding;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
 import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
+import exemple.weatherapp.api.java.yupweather.model.forescastdaily.DailyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,20 +58,23 @@ public class DailyForecastActivity extends AppCompatActivity {
 
     private ActivityDaysForecastBinding binding;
 
+    private TextView temperatureForecast;
+    private TextView todayForecast;
+    private ImageView todayIconForecast;
+
     private DataServiceConditions dataServiceConditions;
     private DataServiceMain dataServiceMain;
+    private DataServiceDaily dataServiceDaily;
 
     private Call<WeatherConditionsDay> callDayConditions;
     private Call<WeatherMainDay> callDayMain;
+    private Call<DailyResponse> callDailyResponse;
 
     private ErrorResponse errorResponse;
     private RecyclerView recyclerViewDays;
 
-    private List<String> daysForecastList = new ArrayList<>();
+    private List<String> dailyForecastList = new ArrayList<>();
 
-    private TextView temperatureForecast;
-    private TextView todayForecast;
-    private ImageView todayIconForecast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,27 +105,71 @@ public class DailyForecastActivity extends AppCompatActivity {
 
         dataServiceMain = APIClientMain.getMainInstance().create(DataServiceMain.class);
         dataServiceConditions = APIClientConditions.getConditionsInstance().create(DataServiceConditions.class);
+        dataServiceDaily = APIClientDaily.getDailyInstance().create(DataServiceDaily.class);
+
 
         callDayMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
         callDayConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
+        callDailyResponse = dataServiceDaily.getDailyWeatherConditions(latitude, longitude, Constants.CMT_COUNT, Constants.API_KEY, Constants.UNITS_FORMAT);
 
-        daysForecastList.add("1");
-        daysForecastList.add("2");
-        daysForecastList.add("3");
-        daysForecastList.add("4");
-        daysForecastList.add("5");
-        daysForecastList.add("6");
-        daysForecastList.add("7");
+        dailyForecastList.add("1");
+        dailyForecastList.add("2");
+        dailyForecastList.add("3");
+        dailyForecastList.add("4");
+        dailyForecastList.add("5");
+        dailyForecastList.add("6");
+        dailyForecastList.add("7");
 
         recyclerViewDays = binding.recyclerViewDaysForecast;
         recyclerViewDays.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerViewDays.setAdapter(new DailyForecastAdapter(daysForecastList, getApplicationContext()));
+        recyclerViewDays.setAdapter(new DailyForecastAdapter(dailyForecastList, getApplicationContext()));
 
 
-
+        getDailyForecast();
         getMainWeather();
         getConditionWeather();
 
+
+    }
+
+    private void getDailyForecast() {
+        callDailyResponse.clone().enqueue(new Callback<DailyResponse>() {
+            @Override
+            public void onResponse(Call<DailyResponse> call, Response<DailyResponse> response) {
+
+                if (response.isSuccessful()){
+                    DailyResponse dailyResponse = response.body();
+                    assert dailyResponse != null;
+                    Log.d("Success T: ", "Response: " + new Gson().toJson(dailyResponse) );
+                    Log.d("Success T: ", response.message() + " " + response.code());
+                } else {
+                    try {
+                        errorResponse = APIClientHourly.parseError(response);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (errorResponse != null) {
+                        // Handle error response
+                        Log.e("DailyForecastActivity", "Error code T: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+
+                        String errorText = errorResponse.getMessage();
+                        convertErrorMessageSize(errorText);
+                        String errorTextConvert = convertErrorMessageSize(errorText);
+
+                        //Toast.makeText(MainActivity.this, "Error code: " + errorResponse.getCod() + ", message: " + errorTextConvert, Toast.LENGTH_SHORT).show();
+
+                        setToastAlert(DailyForecastActivity.this, errorTextConvert);
+
+                    }
+                    Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DailyResponse> call, Throwable t) {
+                Log.d("Network error T: ", t.getMessage());
+            }
+        });
     }
 
     private void getConditionWeather() {
@@ -143,7 +194,7 @@ public class DailyForecastActivity extends AppCompatActivity {
                     }
                     if (errorResponse != null) {
                         // Handle error response
-                        Log.e("MainActivity", "Error code C: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
+                        Log.e("DailyForecastActivity", "Error code C: " + errorResponse.getCod() + ", message: " + errorResponse.getMessage());
 
                         String errorText = errorResponse.getMessage();
                         convertErrorMessageSize(errorText);
@@ -212,7 +263,7 @@ public class DailyForecastActivity extends AppCompatActivity {
 
     private void getMainWeatherData(WeatherMainDay weatherMainDay) {
 
-        String convertedDate = simpleConvertDate(weatherMainDay.getDt());
+        String convertedDate = simpleConvertDate(weatherMainDay.getDt(), weatherMainDay.getTimezone());
         TextView toolbarDayDate = binding.toolbarDaysForecast.textViewToolbarDaysWeatherDate;
         toolbarDayDate.setText(convertedDate);
 
@@ -278,7 +329,7 @@ public class DailyForecastActivity extends AppCompatActivity {
                 Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "50d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_gps_fixed_24)
+                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "50n":
                 Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)

@@ -21,15 +21,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import exemple.weatherapp.api.java.yupweather.R;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherData;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyData;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.Main;
-import exemple.weatherapp.api.java.yupweather.model.forecasthourly.WeatherItem;
+import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyItem;
 
 public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAdapter.MyViewHolder>{
-    private List<WeatherData> hoursForecastList;
+    private List<HourlyData> hoursForecastList;
     private final Context context;
 
-    public HourlyForecastAdapter(List<WeatherData> hoursForecastList, Context context) {
+    public HourlyForecastAdapter(List<HourlyData> hoursForecastList, Context context) {
         this.hoursForecastList = hoursForecastList;
         this.context = context;
     }
@@ -44,7 +44,7 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        WeatherData weatherData = hoursForecastList.get(position);
+        HourlyData weatherData = hoursForecastList.get(position);
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm a", Locale.getDefault());
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT-7"));
         Date date = new Date(weatherData.getDt() * 1000);
@@ -52,7 +52,7 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
 
         Main main = weatherData.getMain();
         holder.textViewForecastTemperature.setText( String.format(context.getString(R.string._0f_c), main.getTemp()));
-        WeatherItem weatherItem = weatherData.getWeather().get(0);
+        HourlyItem weatherItem = weatherData.getWeather().get(0);
 
         if(position > 0) {
             holder.constraintLayoutRowHoursForecast.setBackgroundResource(R.drawable.ic_background_mini_round_corners);

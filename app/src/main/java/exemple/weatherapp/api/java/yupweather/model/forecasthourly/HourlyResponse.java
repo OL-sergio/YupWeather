@@ -3,14 +3,14 @@ package exemple.weatherapp.api.java.yupweather.model.forecasthourly;
 
 import java.util.List;
 
-public class WeatherResponse {
+public class HourlyResponse {
 
     private int cod;
     private int message;
     private int cnt;
-    private List<WeatherData> list;
+    private List<HourlyData> list;
 
-    public WeatherResponse() {
+    public HourlyResponse() {
     }
 
     public int getCod() {
@@ -37,11 +37,11 @@ public class WeatherResponse {
         this.cnt = cnt;
     }
 
-    public List<WeatherData> getList() {
+    public List<HourlyData> getList() {
         return list;
     }
 
-    public void setList(List<WeatherData> list) {
+    public void setList(List<HourlyData> list) {
         this.list = list;
     }
 }
