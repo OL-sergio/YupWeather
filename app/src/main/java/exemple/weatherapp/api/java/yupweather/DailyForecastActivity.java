@@ -3,7 +3,6 @@ package exemple.weatherapp.api.java.yupweather;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertErrorMessageSize;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.convertKevinToCelsius;
 import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertDate;
-import static exemple.weatherapp.api.java.yupweather.utilities.Converts.simpleConvertHourSeconds;
 import static exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts.setToastAlert;
 
 import android.content.Intent;
@@ -31,14 +30,11 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import exemple.weatherapp.api.java.yupweather.adapter.DailyForecastAdapter;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientConditions;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientDaily;
-import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientHourly;
 import exemple.weatherapp.api.java.yupweather.database.api.cliente.APIClientMain;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceConditions;
 import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceDaily;
@@ -46,9 +42,9 @@ import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMa
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityDaysForecastBinding;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
-import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
-import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
-import exemple.weatherapp.api.java.yupweather.model.forescastdaily.DailyResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecastdaily.DailyResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherConditionsDay;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,9 +67,7 @@ public class DailyForecastActivity extends AppCompatActivity {
     private Call<DailyResponse> callDailyResponse;
 
     private ErrorResponse errorResponse;
-    private RecyclerView recyclerViewDays;
-
-    private List<String> dailyForecastList = new ArrayList<>();
+    private RecyclerView recyclerViewDaily;
 
 
     @Override
@@ -112,23 +106,17 @@ public class DailyForecastActivity extends AppCompatActivity {
         callDayConditions = dataServiceConditions.getDayWeatherConditions(latitude, longitude, Constants.API_KEY);
         callDailyResponse = dataServiceDaily.getDailyWeatherConditions(latitude, longitude, Constants.CMT_COUNT, Constants.API_KEY, Constants.UNITS_FORMAT);
 
-        dailyForecastList.add("1");
-        dailyForecastList.add("2");
-        dailyForecastList.add("3");
-        dailyForecastList.add("4");
-        dailyForecastList.add("5");
-        dailyForecastList.add("6");
-        dailyForecastList.add("7");
+        recyclerViewDaily = binding.recyclerViewDaysForecast;
 
-        recyclerViewDays = binding.recyclerViewDaysForecast;
-        recyclerViewDays.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerViewDays.setAdapter(new DailyForecastAdapter(dailyForecastList, getApplicationContext()));
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        linearLayoutManager.setSmoothScrollbarEnabled(true);
+        linearLayoutManager.setReverseLayout(false);
+        recyclerViewDaily.setLayoutManager(linearLayoutManager);
 
         getDailyForecast();
         getMainWeather();
         getConditionWeather();
-
 
     }
 
@@ -140,11 +128,16 @@ public class DailyForecastActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     DailyResponse dailyResponse = response.body();
                     assert dailyResponse != null;
+
+                    DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(dailyResponse.getList(), DailyForecastActivity.this);
+                    recyclerViewDaily.setAdapter(dailyForecastAdapter);
+
+
                     Log.d("Success T: ", "Response: " + new Gson().toJson(dailyResponse) );
                     Log.d("Success T: ", response.message() + " " + response.code());
                 } else {
                     try {
-                        errorResponse = APIClientHourly.parseError(response);
+                        errorResponse = APIClientDaily.parseError(response);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
