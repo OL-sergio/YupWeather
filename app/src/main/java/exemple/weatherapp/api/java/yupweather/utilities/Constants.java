@@ -43,7 +43,7 @@ public final class Constants {
 
     //DataServiceHourly
     public static final String HOURLY = "hourly";
-    public static final int CMT_COUNT = 10;
+    public static final int CMT_COUNT = 7;
     public static final String CNT = "cnt";
     public static final String UNITS = "units";
     public static final String UNITS_FORMAT = "metric";
