@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import exemple.weatherapp.api.java.yupweather.helper.DeserializerDaily;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
-import exemple.weatherapp.api.java.yupweather.model.forescastdaily.DailyResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecastdaily.DailyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import retrofit2.Response;
 import retrofit2.Retrofit;
