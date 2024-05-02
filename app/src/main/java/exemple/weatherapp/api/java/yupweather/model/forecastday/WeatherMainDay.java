@@ -1,4 +1,4 @@
-package exemple.weatherapp.api.java.yupweather.model;
+package exemple.weatherapp.api.java.yupweather.model.forecastday;
 
 
 /*
@@ -62,7 +62,7 @@ public class WeatherMainDay {
     private String dt;
     private String name;
     private String country;
-    private long timezone;
+    private int timezone;
 
 
     public WeatherMainDay(
@@ -72,7 +72,7 @@ public class WeatherMainDay {
             String dt,
             String name,
             String country,
-            long timezone
+            int timezone
     ) {
         this.main = main;
         this.description = description;
@@ -81,6 +81,10 @@ public class WeatherMainDay {
         this.name = name;
         this.country = country;
         this.timezone = timezone;
+    }
+
+    public WeatherMainDay() {
+        timezone = getTimezone();
     }
 
     public String getMain() {
@@ -131,11 +135,11 @@ public class WeatherMainDay {
         this.country = country;
     }
 
-    public long getTimezone() {
+    public int getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(long timezone) {
+    public void setTimezone(int timezone) {
         this.timezone = timezone;
     }
 }
