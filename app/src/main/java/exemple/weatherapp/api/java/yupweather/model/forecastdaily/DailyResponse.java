@@ -1,4 +1,8 @@
-package exemple.weatherapp.api.java.yupweather.model.forescastdaily;
+package exemple.weatherapp.api.java.yupweather.model.forecastdaily;
+
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -8,7 +12,7 @@ public class DailyResponse {
     private String name;
     private String country;
     private String population;
-    private String timezone;
+    private int timezone;
     private String cod;
     private String message;
     private String cnt;
@@ -46,11 +50,11 @@ public class DailyResponse {
         this.population = population;
     }
 
-    public String getTimezone() {
+    public int getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(String timezone) {
+    public void setTimezone(int timezone) {
         this.timezone = timezone;
     }
 

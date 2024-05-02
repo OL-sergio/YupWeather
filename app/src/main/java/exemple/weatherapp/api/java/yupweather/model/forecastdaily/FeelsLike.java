@@ -1,4 +1,4 @@
-package exemple.weatherapp.api.java.yupweather.model.forescastdaily;
+package exemple.weatherapp.api.java.yupweather.model.forecastdaily;
 
 public class FeelsLike {
      private double day;
