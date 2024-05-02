@@ -1,9 +1,7 @@
-package exemple.weatherapp.api.java.yupweather.model.forescastdaily;
-
-import java.util.List;
+package exemple.weatherapp.api.java.yupweather.model.forecastdaily;
 
 public class DailyData {
-    private int dt;
+    private long dt;
     private int sunrise;
     private int sunset;
     private double speed;
@@ -30,11 +28,12 @@ public class DailyData {
 
     private FeelsLike feelsLike;
 
-    public int getDt() {
+
+    public long getDt() {
         return dt;
     }
 
-    public void setDt(int dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 
