@@ -1,24 +1,13 @@
 package exemple.weatherapp.api.java.yupweather.utilities;
 
-import static java.util.Locale.US;
-
 import android.annotation.SuppressLint;
-import android.icu.text.TimeZoneFormat;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
 
 
 public final class Converts {
@@ -41,11 +30,11 @@ public final class Converts {
 
 
     @SuppressLint("SimpleDateFormat")
-    public static String simpleConvertDate(String date, long timeZone) {
+    public static String simpleConvertDate(String date, int timeZone) {
 
         ZoneOffset offset = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            offset = ZoneOffset.ofTotalSeconds((int) timeZone);
+            offset = ZoneOffset.ofTotalSeconds(timeZone);
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM, yyyy", Locale.getDefault());
@@ -56,14 +45,12 @@ public final class Converts {
     }
 
 
-
     @SuppressLint("SimpleDateFormat")
-    public static String simpleConvertHourSeconds(String hours, long timeZone) {
-
+    public static String simpleConvertHourSeconds(String hours, int timeZone) {
 
         ZoneOffset offset = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            offset = ZoneOffset.ofTotalSeconds((int) timeZone);
+            offset = ZoneOffset.ofTotalSeconds(timeZone);
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss ", Locale.getDefault());
