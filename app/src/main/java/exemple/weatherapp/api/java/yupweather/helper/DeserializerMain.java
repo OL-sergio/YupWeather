@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 
 public class DeserializerMain implements JsonDeserializer<WeatherMainDay> {
@@ -29,7 +29,7 @@ public class DeserializerMain implements JsonDeserializer<WeatherMainDay> {
 
         String country = json.getAsJsonObject().get(Constants.SYS).getAsJsonObject().get(Constants.COUNTRY).getAsString();
 
-        long timezone = json.getAsJsonObject().get(Constants.TIME_ZONE).getAsLong();
+        int timezone = json.getAsJsonObject().get(Constants.TIME_ZONE).getAsInt();
 
         return new WeatherMainDay(
                 main,

@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherConditionsDay;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 
 

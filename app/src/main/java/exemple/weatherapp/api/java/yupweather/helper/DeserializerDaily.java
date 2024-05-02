@@ -15,9 +15,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import exemple.weatherapp.api.java.yupweather.model.forescastdaily.DailyData;
-import exemple.weatherapp.api.java.yupweather.model.forescastdaily.FeelsLike;
-import exemple.weatherapp.api.java.yupweather.model.forescastdaily.DailyResponse;
+import exemple.weatherapp.api.java.yupweather.model.forecastdaily.DailyData;
+import exemple.weatherapp.api.java.yupweather.model.forecastdaily.FeelsLike;
+import exemple.weatherapp.api.java.yupweather.model.forecastdaily.DailyResponse;
 
 public class DeserializerDaily implements JsonDeserializer<DailyResponse> {
     @Override
@@ -32,7 +32,7 @@ public class DeserializerDaily implements JsonDeserializer<DailyResponse> {
         String name = jsonObject.get("city").getAsJsonObject().get("name").getAsString();
         String country = jsonObject.get("city").getAsJsonObject().get("country").getAsString();
         String population = jsonObject.get("city").getAsJsonObject().get("population").getAsString();
-        String timezone = jsonObject.get("city").getAsJsonObject().get("timezone").getAsString();
+        int timezone = jsonObject.get("city").getAsJsonObject().get("timezone").getAsInt();
         String cod = jsonObject.get("cod").getAsString();
         String message = jsonObject.get("message").getAsString();
         String cnt = jsonObject.get("cnt").getAsString();
@@ -48,8 +48,7 @@ public class DeserializerDaily implements JsonDeserializer<DailyResponse> {
             int sunrise = listObj.get("sunrise").getAsInt();
             int sunset = listObj.get("sunset").getAsInt();
 
-
-            double day = listObj.get("temp").getAsJsonObject().get("day").getAsInt();
+            double day = listObj.get("temp").getAsJsonObject().get("day").getAsDouble();
             double min = listObj.get("temp").getAsJsonObject().get("min").getAsInt();
             double max = listObj.get("temp").getAsJsonObject().get("max").getAsInt();
             double night = listObj.get("temp").getAsJsonObject().get("night").getAsInt();
@@ -102,8 +101,8 @@ public class DeserializerDaily implements JsonDeserializer<DailyResponse> {
             dailyData.setIcon(icon);
             dailyData.setFeelsLike(feelsLike);
             listItems.add(dailyData);
-        }
 
+        }
 
         DailyResponse dailyResponse = new DailyResponse();
         dailyResponse.setTimezone(timezone);
@@ -114,7 +113,6 @@ public class DeserializerDaily implements JsonDeserializer<DailyResponse> {
         dailyResponse.setMessage(message);
         dailyResponse.setCod(cnt);
         dailyResponse.setList(listItems);
-
         return dailyResponse;
     }
 }
