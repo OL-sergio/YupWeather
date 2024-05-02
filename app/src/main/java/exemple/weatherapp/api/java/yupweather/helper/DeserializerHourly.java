@@ -59,26 +59,26 @@ public class DeserializerHourly implements JsonDeserializer<HourlyResponse>{
             Sys sys = context.deserialize(listObj.get("sys"), Sys.class);
             String dtTxt = listObj.get("dt_txt").getAsString();
 
-            HourlyData weatherData = new HourlyData();
-            weatherData.setDt(dt);
-            weatherData.setMain(main);
-            weatherData.setWeather(weatherItems);
-            weatherData.setClouds(clouds);
-            weatherData.setWind(wind);
-            weatherData.setVisibility(visibility);
-            weatherData.setPop(pop);
-            weatherData.setSys(sys);
-            weatherData.setDtTxt(dtTxt);
-            list.add(weatherData);
+            HourlyData hourlyData = new HourlyData();
+            hourlyData.setDt(dt);
+            hourlyData.setMain(main);
+            hourlyData.setWeather(weatherItems);
+            hourlyData.setClouds(clouds);
+            hourlyData.setWind(wind);
+            hourlyData.setVisibility(visibility);
+            hourlyData.setPop(pop);
+            hourlyData.setSys(sys);
+            hourlyData.setDtTxt(dtTxt);
+            list.add(hourlyData);
 
         }
 
-        HourlyResponse weatherResponse = new HourlyResponse();
-        weatherResponse.setCod(cod);
-        weatherResponse.setMessage(message);
-        weatherResponse.setCnt(cnt);
-        weatherResponse.setList(list);
-        return weatherResponse;
+        HourlyResponse hourlyResponse = new HourlyResponse();
+        hourlyResponse.setCod(cod);
+        hourlyResponse.setMessage(message);
+        hourlyResponse.setCnt(cnt);
+        hourlyResponse.setList(list);
+        return hourlyResponse;
 
     }
 

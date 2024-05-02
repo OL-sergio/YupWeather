@@ -51,8 +51,8 @@ import exemple.weatherapp.api.java.yupweather.database.api.service.DataServiceMa
 import exemple.weatherapp.api.java.yupweather.database.local.SharedPreferenceLocation;
 import exemple.weatherapp.api.java.yupweather.databinding.ActivityMainBinding;
 import exemple.weatherapp.api.java.yupweather.model.ErrorResponse;
-import exemple.weatherapp.api.java.yupweather.model.WeatherConditionsDay;
-import exemple.weatherapp.api.java.yupweather.model.WeatherMainDay;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherConditionsDay;
+import exemple.weatherapp.api.java.yupweather.model.forecastday.WeatherMainDay;
 import exemple.weatherapp.api.java.yupweather.model.forecasthourly.HourlyResponse;
 import exemple.weatherapp.api.java.yupweather.utilities.Constants;
 import exemple.weatherapp.api.java.yupweather.utilities.CustomAlerts;
@@ -87,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
     private Call<WeatherMainDay> callDayMain;
     private Call<HourlyResponse> callDayHourly ;
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewHourly;
     private ErrorResponse errorResponse;
+
 
 
     @Override
@@ -143,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
         callDayMain = dataServiceMain.getDayWeatherMain(latitude, longitude, Constants.API_KEY);
         callDayHourly = dataServiviceHours.getHourlyWeatherConditions(latitude, longitude, Constants.CMT_COUNT, Constants.API_KEY, Constants.UNITS_FORMAT);
 
-        recyclerView = binding.recyclerViewForecastMini;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewHourly = binding.recyclerViewForecastMini;
+        recyclerViewHourly.setHasFixedSize(true);
+
 
         forecastDays.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, DailyForecastActivity.class);
@@ -164,8 +166,16 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     HourlyResponse weatherForecastHourly = response.body();
                     assert weatherForecastHourly != null;
+
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    linearLayoutManager.setSmoothScrollbarEnabled(true);
+                    linearLayoutManager.setReverseLayout(false);
+                    recyclerViewHourly.setLayoutManager(linearLayoutManager);
+
                     HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(weatherForecastHourly.getList(), MainActivity.this);
-                    recyclerView.setAdapter(hourlyForecastAdapter);
+                    recyclerViewHourly.setAdapter(hourlyForecastAdapter);
 
                     Log.d("Success H: ", "Response: " + new Gson().toJson(weatherForecastHourly) );
                     Log.d("Success H: ", response.message() + " " + response.code());
@@ -189,11 +199,11 @@ public class MainActivity extends AppCompatActivity {
                         setToastAlert(MainActivity.this, errorTextConvert);
 
                     }
+
                     Log.d("Error: ", response.message() + " " + response.code() + " " + response.errorBody());
 
                 }
             }
-
 
 
             @Override
@@ -206,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
     private void getMainWeather() {
         callDayMain.clone().enqueue(new Callback<WeatherMainDay>() {
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<WeatherMainDay> call, Response<WeatherMainDay> response) {
                 if (response.isSuccessful()) {
@@ -220,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         errorResponse = APIClientMain.parseError(response);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException();
                     }
                     if (errorResponse != null) {
                         // Handle error response
@@ -246,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getMainWeatherData(WeatherMainDay weatherMainDay) {
 
         TextView toolbarCityName = binding.toolbarMain.textViewSelectedCity;
@@ -271,66 +279,66 @@ public class MainActivity extends AppCompatActivity {
                 .append(weatherMainDay.getDescription()));
 
 
-        String mICON_URL = "https://openweathermap.org/img/wn/" + weatherMainDay.getIcon() + "@2x.png";
+        String mIconUrl = "https://openweathermap.org/img/wn/" + weatherMainDay.getIcon() + "@2x.png";
 
         switch (weatherMainDay.getIcon()) {
 
             case "01d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "01n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "02d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "02n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "03d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "03n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "04d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "04n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "09d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "09n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "10d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "10n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "11d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "11n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "13d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "13n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             case "50d":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_gps_fixed_24)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_gps_fixed_24)
                         .into(todayIconForecast);
             case "50n":
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
             default:
-                Glide.with(this).load(mICON_URL).dontAnimate().error(R.drawable.ic_reload)
+                Glide.with(this).load(mIconUrl).dontAnimate().error(R.drawable.ic_reload)
                         .into(todayIconForecast);
                 break;
         }
