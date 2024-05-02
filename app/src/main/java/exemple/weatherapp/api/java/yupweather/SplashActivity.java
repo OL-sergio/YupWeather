@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 import exemple.weatherapp.api.java.yupweather.databinding.ActivitySplashBinding;
 import exemple.weatherapp.api.java.yupweather.utilities.Animations;
 import exemple.weatherapp.api.java.yupweather.utilities.SystemUi;
@@ -39,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
 
         AnimationSet multipleSunAnimationSet = new AnimationSet(true);
         multipleSunAnimationSet.addAnimation(animations.getAnimFade());
-        multipleSunAnimationSet.addAnimation(animations.getRotateAnim());
+        multipleSunAnimationSet.addAnimation(animations.getMovementLeftAnimation());
         imageViewSun.startAnimation(multipleSunAnimationSet);
 
         AnimationSet multipleCloudAnimationSet = new AnimationSet(true);
@@ -54,7 +56,14 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         },5000);
 
+        Glide.with(this).load(R.drawable.img_sun).dontAnimate().error(R.drawable.ic_reload)
+                .into(imageViewSun);
+
+        Glide.with(this).load(R.drawable.img_cloud).dontAnimate().error(R.drawable.ic_reload)
+                .into(imageViewCloud);
+
     }
+
 
     private void components() {
         imageViewSun =  binding.imageViewSun;
