@@ -26,6 +26,7 @@
            android:layout_gravity="center"
            android:textAlignment="center"
            android:text="testeeeee"
+           android:fontFamily="@font/nunito_sans_extra_bold_compat"
            android:textColor="@color/color_1000"
            android:textSize="16sp"
            android:textStyle="bold" />

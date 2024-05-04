@@ -42,6 +42,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/color_200"
                     android:textSize="24sp"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     android:textStyle="bold" />
 
                 <TextView
@@ -53,6 +54,7 @@
                     android:layout_marginStart="-40dp"
                     android:textAlignment="center"
                     android:textColor="@color/color_100"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     android:textStyle="bold" />
 
             </LinearLayout>

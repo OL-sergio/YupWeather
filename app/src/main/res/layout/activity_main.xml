@@ -55,7 +55,9 @@
                 android:id="@+id/viewCenter"
                 android:layout_width="300dp"
                 android:layout_height="350dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="50dp"
+                android:layout_marginEnd="32dp"
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/background_mini_blue"
                 android:gravity="center"
@@ -77,13 +79,12 @@
 
             <View
                 android:id="@+id/viewBackground"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="-50dp"
                 android:background="@drawable/background_data_forecast"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
@@ -91,7 +92,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_forecastMini"
-                android:layout_width="match_parent"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
@@ -105,7 +106,7 @@
                 android:id="@+id/imageView_todayIconForecast"
                 android:layout_width="180dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="36dp"
                 android:importantForAccessibility="no"
                 android:scaleX="2"
                 android:scaleY="2"
@@ -116,15 +117,18 @@
 
             <TextView
                 android:id="@+id/textView_todayTemperature"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:hint="23º"
+                android:scaleX="1.4"
+                android:scaleY="1.4"
                 android:textAlignment="center"
                 android:textColor="@color/color_200"
                 android:textColorHint="@color/color_200"
-                android:textSize="85sp"
+                android:textSize="74sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/nunito_sans_extra_bold_compat"
                 app:layout_constraintBottom_toTopOf="@+id/textView_todayWeather"
                 app:layout_constraintEnd_toEndOf="@+id/viewCenter"
                 app:layout_constraintStart_toStartOf="@+id/viewCenter"
@@ -133,15 +137,16 @@
 
             <TextView
                 android:id="@+id/textView_todayWeather"
-                android:layout_width="235dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:hint="Moon cloud Fast Wind"
                 android:textColor="@color/color_200"
                 android:textColorHint="@color/color_200"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/nunito_sans_extra_bold_compat"
                 app:layout_constraintBottom_toBottomOf="@+id/viewCenter"
                 app:layout_constraintEnd_toEndOf="@+id/textView_todayTemperature"
                 app:layout_constraintStart_toStartOf="@+id/textView_todayTemperature"
@@ -150,7 +155,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
+                android:layout_width="340dp"
                 android:layout_height="126dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
@@ -186,6 +191,7 @@
                     android:textColor="@color/color_1000"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/imageView_iconHumidity"
                     app:layout_constraintStart_toStartOf="@+id/imageView_iconHumidity"
                     app:layout_constraintTop_toBottomOf="@+id/imageView_iconHumidity" />
@@ -240,6 +246,7 @@
                     android:textColor="@color/color_900"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/textView_dataWind"
                     app:layout_constraintStart_toStartOf="@+id/textView_dataWind"
                     app:layout_constraintTop_toBottomOf="@+id/textView_dataWind" />
@@ -263,11 +270,12 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="1023"
+                    android:hint="1023"
                     android:textAlignment="center"
                     android:textColor="@color/color_1000"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/imageView_iconAirPressure"
                     app:layout_constraintStart_toStartOf="@+id/imageView_iconAirPressure"
                     app:layout_constraintTop_toBottomOf="@+id/imageView_iconAirPressure" />
@@ -277,13 +285,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Pressure"
+                    android:text="Air Pressure"
                     android:textColor="@color/color_900"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/textView_dataAirPressure"
                     app:layout_constraintStart_toStartOf="@+id/textView_dataAirPressure"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_dataAirPressure" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView_dataAirPressure"
+                    tools:ignore="SmallSp" />
 
                 <ImageView
                     android:id="@+id/imageView_iconVisibility"
@@ -309,6 +319,7 @@
                     android:textColor="@color/color_1000"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/imageView_iconVisibility"
                     app:layout_constraintStart_toStartOf="@+id/imageView_iconVisibility"
                     app:layout_constraintTop_toBottomOf="@+id/imageView_iconVisibility" />
@@ -322,6 +333,7 @@
                     android:textColor="@color/color_900"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:layout_constraintEnd_toEndOf="@+id/textView_dataVisibility"
                     app:layout_constraintStart_toStartOf="@+id/textView_dataVisibility"
                     app:layout_constraintTop_toBottomOf="@+id/textView_dataVisibility" />
@@ -359,15 +371,16 @@
 
             <TextView
                 android:id="@+id/textView_dateForecast"
-                android:layout_width="160dp"
-                android:layout_height="45dp"
+                android:layout_width="180dp"
+                android:layout_height="50sp"
                 android:background="@drawable/ic_rectangle_round_mini"
                 android:gravity="center"
                 android:hint="Sunday, 8 march 2021"
                 android:textColor="@color/color_1000"
                 android:textColorHint="@color/color_1000"
-                android:textSize="11sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/nunito_sans_extra_bold_compat"
                 app:layout_constraintBottom_toTopOf="@+id/viewCenter"
                 app:layout_constraintEnd_toEndOf="@+id/viewCenter"
                 app:layout_constraintStart_toStartOf="@+id/viewCenter"
@@ -393,8 +406,9 @@
                     android:layout_weight="1"
                     android:text="Today"
                     android:textColor="@color/color_1000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     tools:layout_editor_absoluteX="34dp"
                     tools:layout_editor_absoluteY="6dp" />
 
@@ -406,8 +420,9 @@
                     android:text="Next 7 days"
                     android:textAlignment="textEnd"
                     android:textColor="@color/color_1000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/nunito_sans_extra_bold_compat"
                     app:drawableEndCompat="@drawable/ic_arrow_forward" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

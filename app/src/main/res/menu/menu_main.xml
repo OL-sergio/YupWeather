@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/menuItem_searchLocation"
-        app:showAsAction="never|ifRoom"
+        app:showAsAction="never"
         android:icon="@drawable/ic_search_24"
         android:title="Search" />
 </menu>
